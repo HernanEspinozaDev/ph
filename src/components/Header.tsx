@@ -14,21 +14,21 @@ import Link from 'next/link';
 
 const navLinks = [
   {
-    label: 'Panadería Pophams',
+    label: 'Pastelería Hijitos',
     dropdown: [
       { label: 'Nuestra Historia', href: '/about' },
       { label: 'Nuestro Equipo', href: '/team' },
       { label: 'Nuestras Ubicaciones', href: '/locations' },
-      { label: 'Empleo', href: '/careers' },
       { label: 'Contacto', href: '/contact' },
     ],
   },
-  { label: 'Pophams Home', href: '/home' },
+  { label: 'Fuente de Soda', href: '/home' },
+  { label: 'Tortas', href: '/home' },
   {
     label: 'Eventos y Catering',
     dropdown: [
-      { label: 'Eventos', href: '/events' },
-      { label: 'Alquiler de Espacios', href: '/venue-hire' },
+      { label: 'Dulces', href: '/events' },
+      { label: 'Salados', href: '/venue-hire' },
     ],
   },
   { label: 'Pedir en Línea', href: '/order-online' },
@@ -36,21 +36,21 @@ const navLinks = [
 
 const mobileNavLinks = [
   {
-    label: 'Panadería Pophams',
+    label: 'Pastelería Hijitos',
     dropdown: [
       { label: 'Nuestra Historia', href: '/about' },
       { label: 'Nuestro Equipo', href: '/team' },
       { label: 'Nuestras Ubicaciones', href: '/locations' },
-      { label: 'Empleo', href: '/careers' },
       { label: 'Contacto', href: '/contact' },
     ],
   },
-  { label: 'Pophams Home', href: '/home' },
+  { label: 'Fuente de Soda', href: '/home' },
+  { label: 'Tortas', href: '/home' },
   {
     label: 'Eventos y Catering',
     dropdown: [
-      { label: 'Eventos', href: '/events' },
-      { label: 'Alquiler de Espacios', href: '/venue-hire' },
+      { label: 'Dulces', href: '/events' },
+      { label: 'Salados', href: '/venue-hire' },
     ],
   },
   { label: 'Pedir en Línea', href: '/order-online' },
@@ -120,7 +120,7 @@ export function Header() {
       <div className="container mx-auto px-6">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="flex-1 lg:flex-none">
-            <h1 className="text-xl font-light tracking-[0.2em] text-primary">POPHAMS</h1>
+            <h1 className="text-xl font-light tracking-[0.2em] text-primary">PASTELERÍA HIJITOS</h1>
           </Link>
 
           <nav className="hidden w-full items-center justify-center gap-2 lg:flex">

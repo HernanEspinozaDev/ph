@@ -69,10 +69,10 @@ export default function Home() {
               Panadería y Artículos para el Hogar
             </p>
             <h2 className="mb-8 font-light tracking-tight text-7xl md:text-9xl">
-              Pophams
+              Pastelería Hijitos
             </h2>
             <p className="mx-auto max-w-2xl text-base font-light leading-relaxed opacity-90 md:text-lg">
-              Pophams es una colección de panaderías artesanales y tiendas de
+              Pastelería Hijitos es una colección de panaderías artesanales y tiendas de
               estilo de vida. Usamos técnicas tradicionales y sabores innovadores para
               crear pasteles de gran sabor, junto con un menú cambiante de
               platos de temporada y bebidas deliciosas.
@@ -86,7 +86,7 @@ export default function Home() {
             <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
               <div>
                 <p className="font-light leading-relaxed">
-                  Fundada en 2017, Pophams nació del sueño de llevar
+                  Fundada en 2017, Pastelería Hijitos nació del sueño de llevar
                   innovación y sabor a la bollería. Desde entonces, hemos
                   evolucionado hasta convertirnos en una marca de estilo de vida arraigada en la comunidad y la
                   artesanía. Nuestros menús celebran sabores frescos y únicos,
@@ -178,7 +178,7 @@ export default function Home() {
                 />
               </div>
               <div className="space-y-6">
-                <h3 className="text-4xl font-light">La Tarjeta Regalo Pophams</h3>
+                <h3 className="text-4xl font-light">La Tarjeta Regalo Pastelería Hijitos</h3>
                 <p className="font-light leading-relaxed">
                   Nuestra tarjeta se puede usar en nuestras panaderías, despensas y tiendas de
                   artículos para el hogar. Los clientes pueden comprar una tarjeta de regalo digital en línea o
@@ -200,7 +200,7 @@ export default function Home() {
                 <h3 className="text-4xl font-light">Compra nuestras Galletas</h3>
                 <p className="font-light leading-relaxed">
                   Recién horneadas en London Fields, nuestras galletas están disponibles en
-                  las tres panaderías y en Pophams Home. Elige entre chocolate y
+                  las tres panaderías y en Pastelería Hijitos Home. Elige entre chocolate y
                   sal marina ahumada, galleta de caramelo o cacahuete y cardamomo.
                 </p>
                 <Button className="bg-primary px-8 py-6 text-sm font-light text-primary-foreground hover:bg-primary/90">
@@ -237,13 +237,13 @@ export default function Home() {
               </div>
               <div className="space-y-6">
                 <h3 className="text-4xl font-light">
-                  Cestas Festivas Pophams
+                  Cestas Festivas Pastelería Hijitos
                 </h3>
                 <p className="font-light leading-relaxed">
-                  Nuestra cesta Pophams está llena de productos hechos en casa por nuestros
+                  Nuestra cesta Pastelería Hijitos está llena de productos hechos en casa por nuestros
                   chefs. Cada cesta viene en una canasta de mimbre tejida a mano y
                   contiene muchas delicias e incluso un pequeño toque
-                  de Pophams para colgar en tu árbol.
+                  de Pastelería Hijitos para colgar en tu árbol.
                 </p>
                 <Button className="bg-primary px-8 py-6 text-sm font-light text-primary-foreground hover:bg-primary/90">
                   COMPRAR DESPENSA

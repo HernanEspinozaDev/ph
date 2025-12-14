@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Pophams Panadería Digital',
+  title: 'Pastelería Hijitos',
   description: 'Una panadería artesanal y tienda de estilo de vida.',
 };
 

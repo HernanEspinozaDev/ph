@@ -9,7 +9,7 @@ export default function AboutPage() {
         <h1 className="mb-8 text-center text-5xl font-light">Nuestra Historia</h1>
         <div className="mx-auto max-w-3xl space-y-6 text-center font-light leading-relaxed">
           <p>
-            Fundada en 2017, Pophams nació del sueño de llevar
+            Fundada en 2017, Pastelería Hijitos nació del sueño de llevar
             innovación y sabor a la bollería. Desde entonces, hemos
             evolucionado hasta convertirnos en una marca de estilo de vida arraigada en la comunidad y la
             artesanía. Nuestros menús celebran sabores frescos y únicos,

@@ -14,12 +14,6 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
-const TelegramIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg {...props} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121L8.08 13.73l-2.97-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.827z"/>
-    </svg>
-);
-
 export function Footer() {
   return (
     <footer className="bg-primary px-4 py-16 text-primary-foreground">
@@ -31,7 +25,6 @@ export function Footer() {
               <li><Link href="#" className="text-sm font-light transition-opacity hover:opacity-70">Buscar</Link></li>
               <li><Link href="#" className="text-sm font-light transition-opacity hover:opacity-70">Preguntas Frecuentes</Link></li>
               <li><Link href="/locations" className="text-sm font-light transition-opacity hover:opacity-70">Ubicaciones</Link></li>
-              <li><Link href="/careers" className="text-sm font-light transition-opacity hover:opacity-70">Empleo</Link></li>
             </ul>
           </div>
           <div>
@@ -45,14 +38,13 @@ export function Footer() {
            <div>
              <h4 className="mb-4 text-sm font-light uppercase tracking-wider">Síguenos</h4>
              <div className="flex gap-4">
-                <a href="#" aria-label="Facebook" className="transition-opacity hover:opacity-70"><FacebookIcon className="h-6 w-6" /></a>
-                <a href="#" aria-label="Instagram" className="transition-opacity hover:opacity-70"><InstagramIcon className="h-6 w-6" /></a>
-                <a href="#" aria-label="Telegram" className="transition-opacity hover:opacity-70"><TelegramIcon className="h-6 w-6" /></a>
+                <a href="https://www.facebook.com/pasteleria.hijitos" aria-label="Facebook" className="transition-opacity hover:opacity-70"><FacebookIcon className="h-6 w-6" /></a>
+                <a href="https://www.instagram.com/pasteleria.hijitos/" aria-label="Instagram" className="transition-opacity hover:opacity-70"><InstagramIcon className="h-6 w-6" /></a>
              </div>
           </div>
         </div>
         <div className="border-t border-primary-foreground/20 pt-8 text-center text-sm font-light">
-          <p>© {new Date().getFullYear()} Pophams.</p>
+          <p>© {new Date().getFullYear()} Pastelería Hijitos.</p>
         </div>
       </div>
     </footer>

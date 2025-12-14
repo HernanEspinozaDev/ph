@@ -9,7 +9,7 @@ export default function OrderOnlinePage() {
         <h1 className="mb-8 text-center text-5xl font-light">Pedir en Línea</h1>
         <div className="mx-auto max-w-3xl space-y-6 text-center font-light leading-relaxed">
           <p>
-            Disfruta de Pophams en casa. Pide tus pasteles, panes y cafés favoritos para recoger o a domicilio.
+            Disfruta de Pastelería Hijitos en casa. Pide tus pasteles, panes y cafés favoritos para recoger o a domicilio.
           </p>
         </div>
       </main>

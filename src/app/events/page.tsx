@@ -9,7 +9,7 @@ export default function EventsPage() {
         <h1 className="mb-8 text-center text-5xl font-light">Eventos</h1>
         <div className="mx-auto max-w-3xl space-y-6 text-center font-light leading-relaxed">
           <p>
-            Acompáñanos en eventos especiales en nuestras panaderías. Desde talleres hasta cenas, siempre hay algo sucediendo en Pophams.
+            Acompáñanos en eventos especiales en nuestras panaderías. Desde talleres hasta cenas, siempre hay algo sucediendo en Pastelería Hijitos.
           </p>
         </div>
       </main>
