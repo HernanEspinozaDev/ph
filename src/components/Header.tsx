@@ -16,44 +16,44 @@ const navLinks = [
   {
     label: 'Pophams Bakery',
     dropdown: [
-      { label: 'Our Story', href: '#' },
-      { label: 'Our Team', href: '#' },
-      { label: 'Our Locations', href: '#' },
-      { label: 'Careers', href: '#' },
-      { label: 'Contact', href: '#' },
+      { label: 'Our Story', href: '/about' },
+      { label: 'Our Team', href: '/team' },
+      { label: 'Our Locations', href: '/locations' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Contact', href: '/contact' },
     ],
   },
-  { label: 'Pophams Home', href: '#' },
+  { label: 'Pophams Home', href: '/home' },
   {
     label: 'Events & Catering',
     dropdown: [
-      { label: 'Events', href: '#' },
-      { label: 'Venue Hire', href: '#' },
+      { label: 'Events', href: '/events' },
+      { label: 'Venue Hire', href: '/venue-hire' },
     ],
   },
-  { label: 'Order Online', href: '#' },
+  { label: 'Order Online', href: '/order-online' },
 ];
 
 const mobileNavLinks = [
   {
     label: 'Pophams Bakery',
     dropdown: [
-      { label: 'Our Story', href: '#' },
-      { label: 'Our Team', href: '#' },
-      { label: 'Our Locations', href: '#' },
-      { label: 'Careers', href: '#' },
-      { label: 'Contact', href: '#' },
+      { label: 'Our Story', href: '/about' },
+      { label: 'Our Team', href: '/team' },
+      { label: 'Our Locations', href: '/locations' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Contact', href: '/contact' },
     ],
   },
-  { label: 'Pophams Home', href: '#' },
+  { label: 'Pophams Home', href: '/home' },
   {
     label: 'Events & Catering',
     dropdown: [
-      { label: 'Events', href: '#' },
-      { label: 'Venue Hire', href: '#' },
+      { label: 'Events', href: '/events' },
+      { label: 'Venue Hire', href: '/venue-hire' },
     ],
   },
-  { label: 'Order Online', href: '#' },
+  { label: 'Order Online', href: '/order-online' },
 ];
 
 export function Header() {
