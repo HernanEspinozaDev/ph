@@ -1,3 +1,4 @@
+import { HeroSection } from '@/components/fuente-de-soda/HeroSection';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
@@ -5,13 +6,23 @@ export default function FuenteDeSodaPage() {
   return (
     <div className="min-h-screen bg-background text-primary">
       <Header />
-      <main className="container mx-auto px-4 py-20">
-        <h1 className="mb-8 text-center text-5xl font-light">Fuente de Soda</h1>
-        <div className="mx-auto max-w-3xl space-y-6 text-center font-light leading-relaxed">
-          <p>
-            Bienvenido a nuestra Fuente de Soda. Aquí encontrarás una selección de delicias para disfrutar.
-          </p>
-        </div>
+      <main>
+        <HeroSection />
+
+        {/* Featured Section (Placeholder for now) */}
+        <section id="destacados" className="py-20 bg-background">
+          <div className="container mx-auto px-4 text-center">
+            <h3 className="text-3xl font-light mb-4">Favoritos de la Casa</h3>
+            <p className="text-muted-foreground mb-8">
+              Descubre los platos que nos han hecho famosos en todo el barrio.
+            </p>
+            <div className="bg-muted/30 p-12 rounded-lg border border-dashed border-muted-foreground/20">
+              <p className="text-lg text-muted-foreground italic">
+                Sección de destacados próximamente...
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
