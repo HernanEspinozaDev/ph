@@ -127,7 +127,7 @@ export function Header() {
               alt="Pastelería Hijitos Logo"
               width={180}
               height={40}
-              className="object-contain"
+              className="h-10 w-auto object-contain"
             />
           </Link>
 
