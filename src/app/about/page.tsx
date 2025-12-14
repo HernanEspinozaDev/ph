@@ -21,7 +21,7 @@ export default function AboutPage() {
             colaboración con nuestros amigos de Ozone, y muchos de los
             artículos hechos a mano de nuestras panaderías, como cerámicas, ropa de cama,
             y cristalería, están disponibles a través de nuestra marca de artículos para el hogar,
-            Pophams Home.
+            Pastelería Hijitos Home.
           </p>
         </div>
       </main>
