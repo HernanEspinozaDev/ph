@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -44,6 +45,18 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-primary-foreground/20 pt-8 text-center text-sm font-light">
+          <div className="mb-6 flex justify-center">
+            <Link href="/">
+              <Image
+                src="/logo.webp"
+                alt="Pastelería Hijitos Logo"
+                width={200}
+                height={45}
+                className="object-contain"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
+            </Link>
+          </div>
           <p>© {new Date().getFullYear()} Pastelería Hijitos.</p>
         </div>
       </div>

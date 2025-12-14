@@ -123,7 +123,7 @@ export function Header() {
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="flex flex-1 items-center lg:flex-none">
             <Image
-              src="/logo.png"
+              src="/logo.webp"
               alt="Pastelería Hijitos Logo"
               width={180}
               height={40}
