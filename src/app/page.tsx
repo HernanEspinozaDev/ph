@@ -66,14 +66,13 @@ export default function Home() {
           </div>
           <div className="relative z-10 max-w-4xl px-4 text-center text-primary-foreground">
             <p className="mb-4 text-sm font-light uppercase tracking-[0.3em]">
-              Panadería y Artículos para el Hogar
+              Pastelería, coctelería y fuente de soda.
             </p>
             <h2 className="mb-8 font-light tracking-tight text-7xl md:text-9xl">
               Pastelería Hijitos
             </h2>
             <p className="mx-auto max-w-2xl text-base font-light leading-relaxed opacity-90 md:text-lg">
-              Pastelería Hijitos es una colección de panaderías artesanales y tiendas de
-              estilo de vida. Usamos técnicas tradicionales y sabores innovadores para
+              Pastelería Hijitos es una pasteleria tradicional e innovadora. Usamos técnicas tradicionales y sabores innovadores para
               crear pasteles de gran sabor, junto con un menú cambiante de
               platos de temporada y bebidas deliciosas.
             </p>

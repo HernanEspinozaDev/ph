@@ -27,7 +27,7 @@ export function Footer() {
                 alt="Pastelería Hijitos Logo"
                 width={200}
                 height={45}
-                className="h-24 w-auto object-contain"
+                className="h-32 w-auto object-contain"
                 style={{ filter: 'brightness(0) invert(1)' }}
               />
             </Link>
