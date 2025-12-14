@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Pastelería Hijitos',
-  description: 'Una panadería artesanal y tienda de estilo de vida.',
+  description: 'Una pasteleria familiar.',
 };
 
 export default function RootLayout({

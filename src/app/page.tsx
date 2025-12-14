@@ -85,10 +85,9 @@ export default function Home() {
             <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
               <div>
                 <p className="font-light leading-relaxed">
-                  Fundada en 2017, Pastelería Hijitos nació del sueño de llevar
-                  innovación y sabor a la bollería. Desde entonces, hemos
-                  evolucionado hasta convertirnos en una marca de estilo de vida arraigada en la comunidad y la
-                  artesanía. Nuestros menús celebran sabores frescos y únicos,
+                  Fundada en 2006, Pastelería Hijitos nació del sueño de llevar
+                  innovación y sabor a la familia. Desde entonces, hemos
+                  evolucionado hasta convertirnos en una marca de estilo de vida arraigada en la comunidad. Nuestros menús celebran sabores frescos y únicos,
                   mientras que nuestros artículos para el hogar cuidadosamente seleccionados enriquecen los
                   rituales cotidianos de la vida, ya sea en nuestras panaderías o en sus propios hogares.
                 </p>
