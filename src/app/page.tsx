@@ -33,17 +33,17 @@ export default function Home() {
     {
       name: 'Islington',
       address: '10 Prebend Street, N1 8DS',
-      hours: 'Mon - Sun: 8am - 4pm',
+      hours: 'Lun - Dom: 8am - 4pm',
     },
     {
       name: 'London Fields',
       address: '197 Richmond Road, E8 3NJ',
-      hours: 'Mon - Sun: 8am - 4pm',
+      hours: 'Lun - Dom: 8am - 4pm',
     },
     {
       name: 'Victoria Park',
       address: '110a Lauriston Road, E9 7HA',
-      hours: 'Mon - Sun: 8am - 5pm',
+      hours: 'Lun - Dom: 8am - 5pm',
     },
   ];
 
@@ -66,16 +66,16 @@ export default function Home() {
           </div>
           <div className="relative z-10 max-w-4xl px-4 text-center text-primary-foreground">
             <p className="mb-4 text-sm font-light uppercase tracking-[0.3em]">
-              Bakery & Homeware
+              Panadería y Artículos para el Hogar
             </p>
             <h2 className="mb-8 font-light tracking-tight text-7xl md:text-9xl">
               Pophams
             </h2>
             <p className="mx-auto max-w-2xl text-base font-light leading-relaxed opacity-90 md:text-lg">
-              Pophams is a collection of artisanal bakeries and lifestyle
-              stores. We use traditional techniques and innovative flavours to
-              create great tasting pastries, alongside a changing menu of
-              seasonal dishes and delicious drinks.
+              Pophams es una colección de panaderías artesanales y tiendas de
+              estilo de vida. Usamos técnicas tradicionales y sabores innovadores para
+              crear pasteles de gran sabor, junto con un menú cambiante de
+              platos de temporada y bebidas deliciosas.
             </p>
           </div>
         </section>
@@ -86,20 +86,20 @@ export default function Home() {
             <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
               <div>
                 <p className="font-light leading-relaxed">
-                  Founded in 2017, Pophams was born from a dream to bring
-                  innovation and flavour to viennoiserie. Since then, we have
-                  evolved into a lifestyle brand rooted in community and
-                  craftsmanship. Our menus celebrate fresh flavours and unique
-                  tastes, while our carefully curated homewares enrich life's
-                  everyday rituals, whether in our bakeries or your own homes.
+                  Fundada en 2017, Pophams nació del sueño de llevar
+                  innovación y sabor a la bollería. Desde entonces, hemos
+                  evolucionado hasta convertirnos en una marca de estilo de vida arraigada en la comunidad y la
+                  artesanía. Nuestros menús celebran sabores frescos y únicos,
+                  mientras que nuestros artículos para el hogar cuidadosamente seleccionados enriquecen los
+                  rituales cotidianos de la vida, ya sea en nuestras panaderías o en sus propios hogares.
                 </p>
               </div>
               <div>
                 <p className="font-light leading-relaxed">
-                  Our coffee is a house blend, developed and roasted in
-                  partnership with our friends Ozone, and many of the
-                  handcrafted items from our bakeries—such as ceramics, linens,
-                  and glassware—are available through our homewares brand,
+                  Nuestro café es una mezcla de la casa, desarrollada y tostada en
+                  colaboración con nuestros amigos de Ozone, y muchos de los
+                  artículos hechos a mano de nuestras panaderías, como cerámicas, ropa de cama,
+                  y cristalería, están disponibles a través de nuestra marca de artículos para el hogar,
                   Pophams Home.
                 </p>
               </div>
@@ -136,10 +136,10 @@ export default function Home() {
         {/* Locations Section */}
         <section className="px-4 py-20 text-center">
           <div className="container mx-auto">
-            <h3 className="mb-2 text-4xl font-light">Our Locations</h3>
+            <h3 className="mb-2 text-4xl font-light">Nuestras Ubicaciones</h3>
             <p className="mx-auto mb-12 max-w-lg text-muted-foreground">
-              Come and say hello at one of our bakeries in Islington, London
-              Fields, or Victoria Park.
+              Ven a saludarnos a una de nuestras panaderías en Islington, London
+              Fields, o Victoria Park.
             </p>
             <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
               {locations.map((location) => (
@@ -154,7 +154,7 @@ export default function Home() {
                     <p className="font-light">{location.address}</p>
                     <p className="font-light">{location.hours}</p>
                     <Button asChild variant="link" className="mt-4 text-primary">
-                      <Link href="#">Get Directions</Link>
+                      <Link href="#">Obtener Direcciones</Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -178,14 +178,14 @@ export default function Home() {
                 />
               </div>
               <div className="space-y-6">
-                <h3 className="text-4xl font-light">The Pophams Gift Card</h3>
+                <h3 className="text-4xl font-light">La Tarjeta Regalo Pophams</h3>
                 <p className="font-light leading-relaxed">
-                  Our card can be spent across our bakeries, pantry and homeware
-                  shops. Customers can buy a digital gift card online or
-                  purchase one in store.
+                  Nuestra tarjeta se puede usar en nuestras panaderías, despensas y tiendas de
+                  artículos para el hogar. Los clientes pueden comprar una tarjeta de regalo digital en línea o
+                  comprar una en la tienda.
                 </p>
                 <Button className="bg-primary px-8 py-6 text-sm font-light text-primary-foreground hover:bg-primary/90">
-                  SHOP GIFT CARD
+                  COMPRAR TARJETA REGALO
                 </Button>
               </div>
             </div>
@@ -197,14 +197,14 @@ export default function Home() {
           <div className="container mx-auto">
             <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
               <div className="space-y-6 md:order-1">
-                <h3 className="text-4xl font-light">Shop our Biscuits</h3>
+                <h3 className="text-4xl font-light">Compra nuestras Galletas</h3>
                 <p className="font-light leading-relaxed">
-                  Freshly baked in London Fields, our biscuits are stocked in
-                  all three bakeries and Pophams Home. Choose from chocolate &
-                  smoked sea salt, caramel shortbread or peanut & cardamom.
+                  Recién horneadas en London Fields, nuestras galletas están disponibles en
+                  las tres panaderías y en Pophams Home. Elige entre chocolate y
+                  sal marina ahumada, galleta de caramelo o cacahuete y cardamomo.
                 </p>
                 <Button className="bg-primary px-8 py-6 text-sm font-light text-primary-foreground hover:bg-primary/90">
-                  SHOP BISCUITS
+                  COMPRAR GALLETAS
                 </Button>
               </div>
               <div className="relative aspect-square overflow-hidden bg-accent/30 md:order-2">
@@ -237,16 +237,16 @@ export default function Home() {
               </div>
               <div className="space-y-6">
                 <h3 className="text-4xl font-light">
-                  Pophams Festive Hampers
+                  Cestas Festivas Pophams
                 </h3>
                 <p className="font-light leading-relaxed">
-                  Our Pophams hamper is full of goods made in-house by our
-                  chefs. Each hamper comes in a handwoven wicker basket and
-                  contains lots of delicious treats and even a little touch of
-                  Pophams to hang on your tree.
+                  Nuestra cesta Pophams está llena de productos hechos en casa por nuestros
+                  chefs. Cada cesta viene en una canasta de mimbre tejida a mano y
+                  contiene muchas delicias e incluso un pequeño toque
+                  de Pophams para colgar en tu árbol.
                 </p>
                 <Button className="bg-primary px-8 py-6 text-sm font-light text-primary-foreground hover:bg-primary/90">
-                  SHOP PANTRY
+                  COMPRAR DESPENSA
                 </Button>
               </div>
             </div>

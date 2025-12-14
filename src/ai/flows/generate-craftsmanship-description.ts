@@ -14,7 +14,7 @@ import {z} from 'genkit';
 const GenerateCraftsmanshipDescriptionInputSchema = z.object({
   currentDescription: z
     .string()
-    .describe('The current description of Pophams craftsmanship values.'),
+    .describe('La descripción actual de los valores de artesanía de Pophams.'),
 });
 export type GenerateCraftsmanshipDescriptionInput =
   z.infer<typeof GenerateCraftsmanshipDescriptionInputSchema>;
@@ -22,7 +22,7 @@ export type GenerateCraftsmanshipDescriptionInput =
 const GenerateCraftsmanshipDescriptionOutputSchema = z.object({
   description: z
     .string()
-    .describe('The AI-generated creative description of Pophams craftsmanship values.'),
+    .describe('La descripción creativa generada por IA de los valores de artesanía de Pophams.'),
 });
 export type GenerateCraftsmanshipDescriptionOutput =
   z.infer<typeof GenerateCraftsmanshipDescriptionOutputSchema>;
@@ -37,7 +37,7 @@ const prompt = ai.definePrompt({
   name: 'generateCraftsmanshipDescriptionPrompt',
   input: {schema: GenerateCraftsmanshipDescriptionInputSchema},
   output: {schema: GenerateCraftsmanshipDescriptionOutputSchema},
-  prompt: `You are a creative copywriter for Pophams, an artisanal bakery known for its commitment to craftsmanship, talented staff, and community focus. The current description is: {{{currentDescription}}}. Generate a new, engaging description that captures the essence of Pophams' values. Focus on artistry, talent, and community. Be concise, but detailed. Be as evocative and persuasive as possible. The generated description should only be a few sentences long.`,
+  prompt: `Eres un redactor creativo para Pophams, una panadería artesanal conocida por su compromiso con la artesanía, su talentoso personal y su enfoque en la comunidad. La descripción actual es: {{{currentDescription}}}. Genera una nueva y atractiva descripción que capture la esencia de los valores de Pophams. Enfócate en el arte, el talento y la comunidad. Sé conciso, pero detallado. Sé lo más evocador y persuasivo posible. La descripción generada debe tener solo unas pocas frases. La respuesta debe estar en español.`,
 });
 
 const generateCraftsmanshipDescriptionFlow = ai.defineFlow(

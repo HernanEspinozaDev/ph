@@ -6,21 +6,21 @@ export default function AboutPage() {
     <div className="min-h-screen bg-background text-primary">
       <Header />
       <main className="container mx-auto px-4 py-20">
-        <h1 className="mb-8 text-center text-5xl font-light">Our Story</h1>
+        <h1 className="mb-8 text-center text-5xl font-light">Nuestra Historia</h1>
         <div className="mx-auto max-w-3xl space-y-6 text-center font-light leading-relaxed">
           <p>
-            Founded in 2017, Pophams was born from a dream to bring
-            innovation and flavour to viennoiserie. Since then, we have
-            evolved into a lifestyle brand rooted in community and
-            craftsmanship. Our menus celebrate fresh flavours and unique
-            tastes, while our carefully curated homewares enrich life's
-            everyday rituals, whether in our bakeries or your own homes.
+            Fundada en 2017, Pophams nació del sueño de llevar
+            innovación y sabor a la bollería. Desde entonces, hemos
+            evolucionado hasta convertirnos en una marca de estilo de vida arraigada en la comunidad y la
+            artesanía. Nuestros menús celebran sabores frescos y únicos,
+            mientras que nuestros artículos para el hogar cuidadosamente seleccionados enriquecen los
+            rituales cotidianos de la vida, ya sea en nuestras panaderías o en sus propios hogares.
           </p>
           <p>
-            Our coffee is a house blend, developed and roasted in
-            partnership with our friends Ozone, and many of the
-            handcrafted items from our bakeries—such as ceramics, linens,
-            and glassware—are available through our homewares brand,
+            Nuestro café es una mezcla de la casa, desarrollada y tostada en
+            colaboración con nuestros amigos de Ozone, y muchos de los
+            artículos hechos a mano de nuestras panaderías, como cerámicas, ropa de cama,
+            y cristalería, están disponibles a través de nuestra marca de artículos para el hogar,
             Pophams Home.
           </p>
         </div>

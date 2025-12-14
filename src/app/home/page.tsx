@@ -9,7 +9,7 @@ export default function PophamsHomePage() {
         <h1 className="mb-8 text-center text-5xl font-light">Pophams Home</h1>
         <div className="mx-auto max-w-3xl space-y-6 text-center font-light leading-relaxed">
           <p>
-            Explore our curated collection of homewares that enrich life's everyday rituals. Many of the handcrafted items from our bakeries—such as ceramics, linens, and glassware—are available through Pophams Home.
+            Explora nuestra colección curada de artículos para el hogar que enriquecen los rituales cotidianos de la vida. Muchos de los artículos hechos a mano de nuestras panaderías, como cerámicas, ropa de cama y cristalería, están disponibles a través de Pophams Home.
           </p>
         </div>
       </main>

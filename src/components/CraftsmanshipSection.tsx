@@ -8,7 +8,7 @@ import type { ImagePlaceholder } from "@/lib/placeholder-images";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const initialDescription = "Artisanal craftsmanship inspires us, but the true essence of our brand is people, our talented staff, lovely customers and the vibrant neighbourhoods we serve. Our locations are welcoming, laid-back spaces where these communities can gather to enjoy food and drink, celebrate artistry, and experience a genuine sense of home.";
+const initialDescription = "La artesanía nos inspira, pero la verdadera esencia de nuestra marca son las personas, nuestro talentoso personal, nuestros encantadores clientes y los vibrantes barrios a los que servimos. Nuestras ubicaciones son espacios acogedores y relajados donde estas comunidades pueden reunirse para disfrutar de la comida y la bebida, celebrar el arte y experimentar una genuina sensación de hogar.";
 
 export function CraftsmanshipSection({ image }: { image: ImagePlaceholder }) {
   const [description, setDescription] = useState(initialDescription);
@@ -25,14 +25,14 @@ export function CraftsmanshipSection({ image }: { image: ImagePlaceholder }) {
         if (result && result.description) {
           setDescription(result.description);
         } else {
-          throw new Error("Received an empty response from AI.");
+          throw new Error("Recibí una respuesta vacía de la IA.");
         }
       } catch (error) {
         console.error(error);
         toast({
           variant: "destructive",
           title: "Error",
-          description: "Failed to generate a new description. Please try again.",
+          description: "No se pudo generar una nueva descripción. Por favor, inténtalo de nuevo.",
         });
       }
     });
@@ -64,10 +64,10 @@ export function CraftsmanshipSection({ image }: { image: ImagePlaceholder }) {
                     {isPending ? (
                         <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Generating...
+                            Generando...
                         </>
                     ) : (
-                        "✨ Regenerate with AI"
+                        "✨ Regenerar con IA"
                     )}
                 </Button>
             </div>

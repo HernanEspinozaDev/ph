@@ -6,10 +6,10 @@ export default function ContactPage() {
     <div className="min-h-screen bg-background text-primary">
       <Header />
       <main className="container mx-auto px-4 py-20">
-        <h1 className="mb-8 text-center text-5xl font-light">Contact Us</h1>
+        <h1 className="mb-8 text-center text-5xl font-light">Contáctanos</h1>
         <div className="mx-auto max-w-3xl space-y-6 text-center font-light leading-relaxed">
           <p>
-            For any inquiries, please reach out to us. We would love to hear from you.
+            Para cualquier consulta, por favor contáctanos. Nos encantaría saber de ti.
           </p>
         </div>
       </main>

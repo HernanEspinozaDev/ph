@@ -14,46 +14,46 @@ import Link from 'next/link';
 
 const navLinks = [
   {
-    label: 'Pophams Bakery',
+    label: 'Panadería Pophams',
     dropdown: [
-      { label: 'Our Story', href: '/about' },
-      { label: 'Our Team', href: '/team' },
-      { label: 'Our Locations', href: '/locations' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Contact', href: '/contact' },
+      { label: 'Nuestra Historia', href: '/about' },
+      { label: 'Nuestro Equipo', href: '/team' },
+      { label: 'Nuestras Ubicaciones', href: '/locations' },
+      { label: 'Empleo', href: '/careers' },
+      { label: 'Contacto', href: '/contact' },
     ],
   },
   { label: 'Pophams Home', href: '/home' },
   {
-    label: 'Events & Catering',
+    label: 'Eventos y Catering',
     dropdown: [
-      { label: 'Events', href: '/events' },
-      { label: 'Venue Hire', href: '/venue-hire' },
+      { label: 'Eventos', href: '/events' },
+      { label: 'Alquiler de Espacios', href: '/venue-hire' },
     ],
   },
-  { label: 'Order Online', href: '/order-online' },
+  { label: 'Pedir en Línea', href: '/order-online' },
 ];
 
 const mobileNavLinks = [
   {
-    label: 'Pophams Bakery',
+    label: 'Panadería Pophams',
     dropdown: [
-      { label: 'Our Story', href: '/about' },
-      { label: 'Our Team', href: '/team' },
-      { label: 'Our Locations', href: '/locations' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Contact', href: '/contact' },
+      { label: 'Nuestra Historia', href: '/about' },
+      { label: 'Nuestro Equipo', href: '/team' },
+      { label: 'Nuestras Ubicaciones', href: '/locations' },
+      { label: 'Empleo', href: '/careers' },
+      { label: 'Contacto', href: '/contact' },
     ],
   },
   { label: 'Pophams Home', href: '/home' },
   {
-    label: 'Events & Catering',
+    label: 'Eventos y Catering',
     dropdown: [
-      { label: 'Events', href: '/events' },
-      { label: 'Venue Hire', href: '/venue-hire' },
+      { label: 'Eventos', href: '/events' },
+      { label: 'Alquiler de Espacios', href: '/venue-hire' },
     ],
   },
-  { label: 'Order Online', href: '/order-online' },
+  { label: 'Pedir en Línea', href: '/order-online' },
 ];
 
 export function Header() {
@@ -132,7 +132,7 @@ export function Header() {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-6 w-6 text-primary" />
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">Abrir menú</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] bg-background p-0">

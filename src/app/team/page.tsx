@@ -6,10 +6,10 @@ export default function TeamPage() {
     <div className="min-h-screen bg-background text-primary">
       <Header />
       <main className="container mx-auto px-4 py-20">
-        <h1 className="mb-8 text-center text-5xl font-light">Our Team</h1>
+        <h1 className="mb-8 text-center text-5xl font-light">Nuestro Equipo</h1>
         <div className="mx-auto max-w-3xl space-y-6 text-center font-light leading-relaxed">
           <p>
-            Meet the talented individuals behind Pophams. Our team is a passionate group of bakers, chefs, baristas, and creatives dedicated to their craft.
+            Conoce a las personas talentosas detrás de Pophams. Nuestro equipo es un grupo apasionado de panaderos, chefs, baristas y creativos dedicados a su oficio.
           </p>
         </div>
       </main>

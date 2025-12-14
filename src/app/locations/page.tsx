@@ -9,17 +9,17 @@ export default function LocationsPage() {
     {
       name: 'Islington',
       address: '10 Prebend Street, N1 8DS',
-      hours: 'Mon - Sun: 8am - 4pm',
+      hours: 'Lun - Dom: 8am - 4pm',
     },
     {
       name: 'London Fields',
       address: '197 Richmond Road, E8 3NJ',
-      hours: 'Mon - Sun: 8am - 4pm',
+      hours: 'Lun - Dom: 8am - 4pm',
     },
     {
       name: 'Victoria Park',
       address: '110a Lauriston Road, E9 7HA',
-      hours: 'Mon - Sun: 8am - 5pm',
+      hours: 'Lun - Dom: 8am - 5pm',
     },
   ];
 
@@ -27,10 +27,10 @@ export default function LocationsPage() {
     <div className="min-h-screen bg-background text-primary">
       <Header />
       <main className="container mx-auto px-4 py-20">
-        <h1 className="mb-8 text-center text-5xl font-light">Our Locations</h1>
+        <h1 className="mb-8 text-center text-5xl font-light">Nuestras Ubicaciones</h1>
         <p className="mx-auto mb-12 max-w-lg text-center text-muted-foreground">
-          Come and say hello at one of our bakeries in Islington, London
-          Fields, or Victoria Park.
+          Ven a saludarnos a una de nuestras panaderías en Islington, London
+          Fields, o Victoria Park.
         </p>
         <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
           {locations.map((location) => (
@@ -45,7 +45,7 @@ export default function LocationsPage() {
                 <p className="font-light">{location.address}</p>
                 <p className="font-light">{location.hours}</p>
                 <Button asChild variant="link" className="mt-4 text-primary">
-                  <Link href="#">Get Directions</Link>
+                  <Link href="#">Obtener Direcciones</Link>
                 </Button>
               </CardContent>
             </Card>

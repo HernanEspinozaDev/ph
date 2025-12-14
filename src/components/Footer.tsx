@@ -26,24 +26,24 @@ export function Footer() {
       <div className="container mx-auto">
         <div className="mb-12 grid gap-12 md:grid-cols-3">
           <div>
-            <h4 className="mb-4 text-sm font-light uppercase tracking-wider">Footer menu</h4>
+            <h4 className="mb-4 text-sm font-light uppercase tracking-wider">Menú del pie de página</h4>
             <ul className="space-y-3">
-              <li><Link href="#" className="text-sm font-light transition-opacity hover:opacity-70">Search</Link></li>
-              <li><Link href="#" className="text-sm font-light transition-opacity hover:opacity-70">FAQs</Link></li>
-              <li><Link href="#" className="text-sm font-light transition-opacity hover:opacity-70">Locations</Link></li>
-              <li><Link href="#" className="text-sm font-light transition-opacity hover:opacity-70">Careers</Link></li>
+              <li><Link href="#" className="text-sm font-light transition-opacity hover:opacity-70">Buscar</Link></li>
+              <li><Link href="#" className="text-sm font-light transition-opacity hover:opacity-70">Preguntas Frecuentes</Link></li>
+              <li><Link href="/locations" className="text-sm font-light transition-opacity hover:opacity-70">Ubicaciones</Link></li>
+              <li><Link href="/careers" className="text-sm font-light transition-opacity hover:opacity-70">Empleo</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="mb-4 text-sm font-light uppercase tracking-wider">Subscribe to our newsletter</h4>
-            <p className="mb-4 text-sm font-light opacity-80">Promotions, new products and sales. Directly to your inbox.</p>
+            <h4 className="mb-4 text-sm font-light uppercase tracking-wider">Suscríbete a nuestro boletín</h4>
+            <p className="mb-4 text-sm font-light opacity-80">Promociones, nuevos productos y ventas. Directamente a tu bandeja de entrada.</p>
             <form className="flex">
-                <Input type="email" placeholder="Your email" className="rounded-r-none border-primary-foreground/50 bg-primary/80 text-primary-foreground placeholder:text-primary-foreground/70 focus-visible:ring-offset-primary" />
-                <Button type="submit" variant="secondary" className="rounded-l-none bg-primary-foreground text-primary hover:bg-primary-foreground/80">Subscribe</Button>
+                <Input type="email" placeholder="Tu email" className="rounded-r-none border-primary-foreground/50 bg-primary/80 text-primary-foreground placeholder:text-primary-foreground/70 focus-visible:ring-offset-primary" />
+                <Button type="submit" variant="secondary" className="rounded-l-none bg-primary-foreground text-primary hover:bg-primary-foreground/80">Suscribirse</Button>
             </form>
           </div>
            <div>
-             <h4 className="mb-4 text-sm font-light uppercase tracking-wider">Follow Us</h4>
+             <h4 className="mb-4 text-sm font-light uppercase tracking-wider">Síguenos</h4>
              <div className="flex gap-4">
                 <a href="#" aria-label="Facebook" className="transition-opacity hover:opacity-70"><FacebookIcon className="h-6 w-6" /></a>
                 <a href="#" aria-label="Instagram" className="transition-opacity hover:opacity-70"><InstagramIcon className="h-6 w-6" /></a>
