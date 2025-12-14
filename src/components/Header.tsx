@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from 'next/link';
+import Image from 'next/image';
 
 const navLinks = [
   {
@@ -120,8 +121,14 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto px-6">
         <div className="flex h-20 items-center justify-between">
-          <Link href="/" className="flex-1 lg:flex-none">
-            <h1 className="text-xl font-light tracking-[0.2em] text-primary">PASTELERÍA HIJITOS</h1>
+          <Link href="/" className="flex flex-1 items-center lg:flex-none">
+            <Image
+              src="/logo.png"
+              alt="Pastelería Hijitos Logo"
+              width={180}
+              height={40}
+              className="object-contain"
+            />
           </Link>
 
           <nav className="hidden w-full items-center justify-center gap-2 lg:flex">
