@@ -1,12 +1,21 @@
 "use client";
 
 import { useState } from 'react';
-import { ChevronDown, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Link from 'next/link';
 
 const navLinks = [
+  { label: 'Our Story', href: '#' },
+  { label: 'Our Team', href: '#' },
+  { label: 'Our Locations', href: '#' },
+  { label: 'Pophams Home', href: '#' },
+  { label: 'Events & Catering', href: '#' },
+  { label: 'Order Online', href: '#' },
+];
+
+const mobileNavLinks = [
   {
     label: 'Pophams Bakery',
     dropdown: [
@@ -29,52 +38,24 @@ const navLinks = [
 ];
 
 export function Header() {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
   const NavContent = () => (
     <>
-      {navLinks.map((link) =>
-        link.dropdown ? (
-          <div
-            key={link.label}
-            className="relative"
-            onMouseEnter={() => setOpenDropdown(link.label)}
-            onMouseLeave={() => setOpenDropdown(null)}
-          >
-            <button className="flex items-center gap-1 text-sm font-light uppercase tracking-wide text-primary transition-opacity hover:opacity-70">
-              {link.label}
-              <ChevronDown className="h-3 w-3" />
-            </button>
-            {openDropdown === link.label && (
-              <div className="absolute left-0 top-full z-20 min-w-[200px] border border-border bg-background/90 py-2 shadow-lg backdrop-blur-sm">
-                {link.dropdown.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="block px-6 py-2.5 text-sm font-light text-primary transition-colors hover:bg-secondary"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        ) : (
-          <Link
-            key={link.label}
-            href={link.href!}
-            className="text-sm font-light uppercase tracking-wide text-primary transition-opacity hover:opacity-70"
-          >
-            {link.label}
-          </Link>
-        )
-      )}
+      {navLinks.map((link) => (
+        <Link
+          key={link.label}
+          href={link.href}
+          className="group relative text-sm font-light uppercase tracking-wide text-primary transition-opacity hover:opacity-70"
+        >
+          {link.label}
+          <span className="absolute bottom-0 left-0 h-0.5 w-full scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100"></span>
+        </Link>
+      ))}
     </>
   );
-  
+
   const MobileNavContent = () => (
     <nav className="flex flex-col gap-6 p-8 pt-24 text-lg">
-      {navLinks.map((link) => (
+      {mobileNavLinks.map((link) => (
         <div key={link.label}>
           {link.dropdown ? (
             <div className="flex flex-col gap-3">
@@ -99,15 +80,15 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container mx-auto px-6">
         <div className="flex h-20 items-center justify-between">
-          <Link href="/" className="flex-1">
+          <Link href="/" className="flex-1 lg:flex-none">
             <h1 className="text-xl font-light tracking-[0.2em] text-primary">POPHAMS</h1>
           </Link>
 
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden w-full items-center justify-center gap-8 lg:flex">
             <NavContent />
           </nav>
 
-          <div className="flex flex-1 justify-end md:hidden">
+          <div className="flex flex-1 justify-end lg:hidden">
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
