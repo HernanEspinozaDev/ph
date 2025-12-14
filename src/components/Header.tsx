@@ -1,17 +1,36 @@
 "use client";
 
 import { useState } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Link from 'next/link';
 
 const navLinks = [
-  { label: 'Our Story', href: '#' },
-  { label: 'Our Team', href: '#' },
-  { label: 'Our Locations', href: '#' },
+  {
+    label: 'Pophams Bakery',
+    dropdown: [
+      { label: 'Our Story', href: '#' },
+      { label: 'Our Team', href: '#' },
+      { label: 'Our Locations', href: '#' },
+      { label: 'Careers', href: '#' },
+      { label: 'Contact', href: '#' },
+    ],
+  },
   { label: 'Pophams Home', href: '#' },
-  { label: 'Events & Catering', href: '#' },
+  {
+    label: 'Events & Catering',
+    dropdown: [
+      { label: 'Events', href: '#' },
+      { label: 'Venue Hire', href: '#' },
+    ],
+  },
   { label: 'Order Online', href: '#' },
 ];
 
@@ -41,14 +60,34 @@ export function Header() {
   const NavContent = () => (
     <>
       {navLinks.map((link) => (
-        <Link
-          key={link.label}
-          href={link.href}
-          className="group relative text-sm font-light uppercase tracking-wide text-primary transition-opacity hover:opacity-70"
-        >
-          {link.label}
-          <span className="absolute bottom-0 left-0 h-0.5 w-full scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100"></span>
-        </Link>
+        <div key={link.label}>
+        {link.dropdown ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="group relative text-sm font-light uppercase tracking-wide text-primary transition-opacity hover:opacity-70 hover:bg-transparent">
+                  {link.label}
+                  <ChevronDown className="ml-1 h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                   <span className="absolute bottom-0 left-0 h-0.5 w-full scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100"></span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-background border-border">
+                {link.dropdown.map((item) => (
+                  <DropdownMenuItem key={item.label} asChild>
+                    <Link href={item.href} className="text-primary font-light transition-opacity hover:opacity-70">{item.label}</Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+        ) : (
+          <Link
+            href={link.href!}
+            className="group relative text-sm font-light uppercase tracking-wide text-primary transition-opacity hover:opacity-70 px-4 py-2"
+          >
+            {link.label}
+            <span className="absolute bottom-0 left-0 h-0.5 w-full scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100"></span>
+          </Link>
+        )}
+        </div>
       ))}
     </>
   );
@@ -84,7 +123,7 @@ export function Header() {
             <h1 className="text-xl font-light tracking-[0.2em] text-primary">POPHAMS</h1>
           </Link>
 
-          <nav className="hidden w-full items-center justify-center gap-8 lg:flex">
+          <nav className="hidden w-full items-center justify-center gap-2 lg:flex">
             <NavContent />
           </nav>
 
