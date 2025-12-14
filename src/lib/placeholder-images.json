@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "Close-up of freshly baked pastries",
+      "imageUrl": "https://images.unsplash.com/photo-1742137745220-609bc003acf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwYXN0cmllcyUyMGNsb3NlLXVwfGVufDB8fHx8MTc2NTcyMTM4NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pastries close-up"
+    },
+    {
+      "id": "grid1",
+      "description": "A cup of coffee next to a croissant",
+      "imageUrl": "https://images.unsplash.com/photo-1763683944193-c4635a3d3999?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb2ZmZWUlMjBwYXN0cnl8ZW58MHx8fHwxNzY1NzIxMzg1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee pastry"
+    },
+    {
+      "id": "grid2",
+      "description": "The bright and welcoming interior of a bakery",
+      "imageUrl": "https://images.unsplash.com/photo-1651449815979-97e7e02444f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxiYWtlcnklMjBpbnRlcmlvcnxlbnwwfHx8fDE3NjU2MzIwNzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bakery interior"
+    },
+    {
+      "id": "grid3",
+      "description": "A delicious pastry with a caramel glaze",
+      "imageUrl": "https://images.unsplash.com/photo-1619868208769-66d64945f214?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwYXN0cnklMjBjYXJhbWVsfGVufDB8fHx8MTc2NTcyMTM4NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pastry caramel"
+    },
+    {
+      "id": "craftsmanship",
+      "description": "Bakers carefully preparing dough",
+      "imageUrl": "https://images.unsplash.com/photo-1738244969485-2c315f26655d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxiYWtlcnMlMjB3b3JraW5nfGVufDB8fHx8MTc2NTcyMTM4Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bakers working"
+    },
+    {
+      "id": "giftcard",
+      "description": "A stylish Pophams gift card",
+      "imageUrl": "https://images.unsplash.com/photo-1549116917-bccf55924737?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxnaWZ0JTIwY2FyZHxlbnwwfHx8fDE3NjU2MTY4NDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gift card"
+    },
+    {
+      "id": "biscuits",
+      "description": "A stack of packaged biscuits",
+      "imageUrl": "https://images.unsplash.com/photo-1638015474009-c0a6913626a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxiaXNjdWl0cyUyMHBhY2thZ2V8ZW58MHx8fHwxNzY1NzIxMzg1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "biscuits package"
+    },
+    {
+      "id": "hampers",
+      "description": "A festive hamper filled with artisanal food products",
+      "imageUrl": "https://images.unsplash.com/photo-1618231876229-8f3802e1d1f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmb29kJTIwaGFtcGVyfGVufDB8fHx8MTc2NTcyMTM4Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food hamper"
+    }
+  ]
 }
