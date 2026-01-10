@@ -29,5 +29,5 @@ yarn-error.log*
 .env
 
 # AI files
-/src/ai/
+
 .vercel
