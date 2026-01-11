@@ -11,8 +11,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Jost', 'sans-serif'],
-        headline: ['Jost', 'sans-serif'],
+        body: ['"Source Sans Pro"', 'sans-serif'],
+        headline: ['"Playfair Display"', 'serif'],
+        classic: ['Poppins', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
