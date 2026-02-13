@@ -1,13 +1,14 @@
 import Image from 'next/image';
-import { MENU_GROUPS } from '@/lib/menuData'; // To come
 import { cn } from '@/lib/utils';
+import { MenuGroup } from '@/types/menu';
 
 interface MenuSidebarProps {
     activeGroup: string;
     onSelectGroup: (id: string) => void;
+    groups: MenuGroup[];
 }
 
-export function MenuSidebar({ activeGroup, onSelectGroup }: MenuSidebarProps) {
+export function MenuSidebar({ activeGroup, onSelectGroup, groups }: MenuSidebarProps) {
     return (
         <div className="hidden lg:flex flex-col fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-stone-200 z-50">
             <div className="p-6 flex justify-center border-b border-stone-100">
@@ -24,7 +25,7 @@ export function MenuSidebar({ activeGroup, onSelectGroup }: MenuSidebarProps) {
 
             <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
                 <p className="px-4 text-xs font-bold text-stone-400 uppercase tracking-wider mb-2">Carta</p>
-                {MENU_GROUPS.map((group) => (
+                {groups.map((group) => (
                     <button
                         key={group.id}
                         onClick={() => onSelectGroup(group.id)}

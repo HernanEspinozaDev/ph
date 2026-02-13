@@ -1,35 +1,40 @@
 
 import Image from 'next/image';
-import { CATEGORIES, MENU_ITEMS, MENU_GROUPS } from '@/lib/menuData'; // Use unified data
+import { getMenu } from '@/app/actions/menu';
 import MenuSection from "@/components/cartaclasica/MenuSection";
 import "@/styles/menu.css";
+import { Product } from '@/types/menu';
 
-// Reusing GROUPS from Carta Digital Page or defining them here as they are visual organization
-const GROUPS = MENU_GROUPS;
+export const runtime = 'edge';
 
-export default function CartaClasicaPage() {
-    // We need to transform the flat items list into the nested structure MenuSection expects
-    // or simply iterate freely. Carta Clasica renders sections.
+// Helper to group items by category
+const groupItemsByCategory = (items: Product[]) => {
+    const groups: Record<string, any[]> = {};
 
-    // Helper to build sections based on Groups
-    const sections = GROUPS.map(group => {
-        // Find categories in this group
-        const groupCategories = CATEGORIES.filter(c => c.group === group.id);
-        const groupCategoryIds = groupCategories.map(c => c.id);
+    items.forEach(item => {
+        const category = item.categoria || 'Otros';
+        if (!groups[category]) {
+            groups[category] = [];
+        }
+        groups[category].push({
+            name: item.nombre,
+            price: item.precio,
+            ingredients: item.ingredientes,
+            imageUrl: item.imagen_url,
+            stock: item.stock,
+            gestionar_stock: item.gestionar_stock
+        });
+    });
 
-        // Find items in these categories
-        const groupItems = MENU_ITEMS.filter(item => groupCategoryIds.includes(item.categoryId));
+    return Object.entries(groups).map(([name, items]) => ({
+        name,
+        items
+    }));
+};
 
-        return {
-            name: group.label.toUpperCase(),
-            items: groupItems.map(item => ({
-                name: item.name,
-                price: item.price,
-                description: item.description // Include description if available
-            }))
-        };
-    }).filter(section => section.items.length > 0); // Only show sections with items
-
+export default async function CartaClasicaPage() {
+    const menuItems = await getMenu();
+    const sections = groupItemsByCategory(menuItems);
 
     return (
         <div className="min-h-screen bg-[#1c1c1c] text-white">
@@ -43,13 +48,23 @@ export default function CartaClasicaPage() {
                             className="object-contain"
                         />
                     </div>
-                    <h1>Pastelería Hijitos</h1>
-                    <div className="subtitle">Menú</div>
+                    <div className="text-center">
+                        <h1 className="text-4xl font-bold text-amber-500 mb-2 font-dancing">Pastelería Hijitos</h1>
+                        <div className="text-xl text-gray-400 font-light tracking-wide uppercase">Menú</div>
+                    </div>
                 </header>
 
-                {sections.map((section, index) => (
-                    <MenuSection key={index} {...section} />
-                ))}
+                <main className="space-y-12 py-8">
+                    {sections.length > 0 ? (
+                        sections.map((section, index) => (
+                            <MenuSection key={index} name={section.name} items={section.items} />
+                        ))
+                    ) : (
+                        <div className="text-center text-gray-500 py-10">
+                            <p>Cargando menú...</p>
+                        </div>
+                    )}
+                </main>
             </div>
         </div>
     );

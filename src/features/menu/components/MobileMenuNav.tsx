@@ -1,13 +1,14 @@
 import Image from 'next/image';
-import { MENU_GROUPS } from '@/lib/menuData';
 import { cn } from '@/lib/utils';
+import { MenuGroup } from '@/types/menu';
 
 interface MobileMenuNavProps {
     activeGroup: string;
     onSelectGroup: (id: string) => void;
+    groups: MenuGroup[];
 }
 
-export function MobileMenuNav({ activeGroup, onSelectGroup }: MobileMenuNavProps) {
+export function MobileMenuNav({ activeGroup, onSelectGroup, groups }: MobileMenuNavProps) {
     return (
         <div className="lg:hidden sticky top-0 z-50 bg-white shadow-sm">
             {/* Top Logo */}
@@ -18,12 +19,14 @@ export function MobileMenuNav({ activeGroup, onSelectGroup }: MobileMenuNavProps
                         alt="Logo Hijitos"
                         fill
                         className="object-contain"
+                        priority
+                        sizes="(max-width: 768px) 100vw, 33vw"
                     />
                 </div>
             </div>
             {/* Scrollable Nav */}
             <div className="flex overflow-x-auto whitespace-nowrap bg-white px-4 py-3 scrollbar-hide gap-3 border-b border-stone-200">
-                {MENU_GROUPS.map((group) => (
+                {groups.map((group) => (
                     <button
                         key={group.id}
                         onClick={() => onSelectGroup(group.id)}

@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import { MenuItem } from '@/lib/menuData';
-import { formatPrice } from '@/lib/utils'; // Moved here
-import { cn } from '@/lib/utils'; // Assuming cn is in utils
+import { Product } from '@/types/menu';
+import { formatPrice } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
-    item: MenuItem;
-    onClick: (item: MenuItem) => void;
+    item: Product;
+    onClick: (item: Product) => void;
 }
 
 export function ProductCard({ item, onClick }: ProductCardProps) {
@@ -16,22 +16,24 @@ export function ProductCard({ item, onClick }: ProductCardProps) {
         >
             {/* Image Left */}
             <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex-shrink-0 rounded-lg overflow-hidden bg-stone-100">
-                <Image
-                    src={item.imageUrl}
-                    alt={item.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                {/* Status Badge */}
-                {item.stock === 0 && (
+                {item.imagen_url ? (
+                    <Image
+                        src={item.imagen_url}
+                        alt={item.nombre}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-stone-200 text-stone-400">
+                        <span className="text-xs">Sin imagen</span>
+                    </div>
+                )}
+
+                {/* Status Badge - Logic simplified for now as stock is not in DB yet */}
+                {item.disponible === 0 && (
                     <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                         <span className="text-white text-xs font-bold uppercase">Agotado</span>
                     </div>
-                )}
-                {((item.stock !== undefined && item.stock > 0 && item.stock < 5) || (item.isAvailable === false)) && (
-                    <span className="absolute bottom-1 right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded">
-                        Pocos
-                    </span>
                 )}
             </div>
 
@@ -40,24 +42,24 @@ export function ProductCard({ item, onClick }: ProductCardProps) {
                 <div>
                     <div className="flex justify-between items-start gap-2">
                         <h3 className="font-bold text-stone-800 line-clamp-2 leading-tight group-hover:text-amber-600 transition-colors">
-                            {item.name}
+                            {item.nombre}
                         </h3>
                         <span className="font-bold text-amber-600 text-lg whitespace-nowrap">
-                            {formatPrice(item.price)}
+                            ${item.precio.toLocaleString('es-CL')}
                         </span>
                     </div>
                     <p className="text-sm text-stone-500 mt-1 line-clamp-2">
-                        {item.description}
+                        {item.ingredientes}
                     </p>
                 </div>
 
-                <div className="flex gap-2 mt-2">
-                    {item.badges?.map(badge => (
-                        <span key={badge} className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-100">
-                            {badge}
+                {item.gestionar_stock === 1 && (
+                    <div className="mt-2 flex items-center gap-2">
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${item.stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                            {item.stock > 0 ? `${item.stock} disponibles` : 'Agotado'}
                         </span>
-                    ))}
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     );

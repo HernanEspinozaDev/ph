@@ -31,3 +31,19 @@ yarn-error.log*
 # AI files
 
 .vercel
+
+# Cloudflare / Workers
+.wrangler
+.dev.vars
+worker-configuration.d.ts
+
+# OS & Editor
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Database
+*.sql
+migrations/

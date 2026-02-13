@@ -5,7 +5,10 @@ import MenuItem from './MenuItem';
 interface Item {
     name: string;
     price: number;
-    description?: string;
+    ingredients?: string;
+    imageUrl?: string | null;
+    stock: number;
+    gestionar_stock: number;
 }
 
 interface MenuSectionProps {

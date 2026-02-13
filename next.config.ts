@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+// import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -40,8 +41,70 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'imagenes.pasteleriahijitos.cl',
+        port: '',
+        pathname: '/**',
+      },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/sucursal',
+        permanent: false,
+      },
+      {
+        source: '/about',
+        destination: '/sucursal',
+        permanent: false,
+      },
+      {
+        source: '/team',
+        destination: '/sucursal',
+        permanent: false,
+      },
+      {
+        source: '/locations',
+        destination: '/sucursal',
+        permanent: false,
+      },
+      {
+        source: '/contact',
+        destination: '/sucursal',
+        permanent: false,
+      },
+      {
+        source: '/dulces',
+        destination: '/sucursal',
+        permanent: false,
+      },
+      {
+        source: '/salados',
+        destination: '/sucursal',
+        permanent: false,
+      },
+      {
+        source: '/tortas',
+        destination: '/sucursal',
+        permanent: false,
+      },
+      {
+        source: '/order-online',
+        destination: '/sucursal',
+        permanent: false,
+      },
+    ];
   },
 };
 
-export default nextConfig;
+export default async function config() {
+  // Use setupDevPlatform for local development with Cloudflare bindings
+  if (process.env.NODE_ENV === 'development') {
+    const { setupDevPlatform } = await import('@cloudflare/next-on-pages/next-dev');
+    await setupDevPlatform();
+  }
+  return nextConfig;
+}
