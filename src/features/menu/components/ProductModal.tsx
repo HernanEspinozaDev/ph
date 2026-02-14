@@ -18,7 +18,7 @@ interface ProductModalProps {
 export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-            <DialogContent className="sm:max-w-md w-[95vw] p-0 overflow-hidden bg-white text-stone-800">
+            <DialogContent className="sm:max-w-md w-[95vw] p-0 overflow-hidden bg-white text-stone-800 [&>button]:hidden">
                 <DialogTitle className="sr-only">
                     {product ? product.nombre : 'Detalle del producto'}
                 </DialogTitle>
@@ -44,7 +44,7 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
                             <Button
                                 variant="ghost"
                                 size="icon"
-                                className="absolute right-3 top-3 bg-black/20 text-white hover:bg-black/40 rounded-full backdrop-blur-sm"
+                                className="absolute right-3 top-3 bg-black/20 text-white hover:bg-black/40 rounded-full backdrop-blur-sm z-50"
                                 onClick={onClose}
                             >
                                 <X className="h-5 w-5" />
@@ -78,8 +78,16 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
                             <div className="flex items-center gap-3 p-3 bg-stone-50 rounded-lg border border-stone-100">
                                 <ChefHat className="h-5 w-5 text-emerald-500" />
                                 <div>
-                                    <p className="text-xs text-stone-500 font-bold uppercase">Cocina</p>
-                                    <p className="text-sm font-medium text-stone-800">Preparado con cariño</p>
+                                    <p className="text-xs text-stone-500 font-bold uppercase">{product.categoria}</p>
+                                    {product.gestionar_stock === 1 ? (
+                                        <p className="text-sm font-medium text-stone-800">
+                                            Stock disponible: {product.stock}
+                                        </p>
+                                    ) : (
+                                        <p className="text-sm font-medium text-stone-800">
+                                            Disponible
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 
