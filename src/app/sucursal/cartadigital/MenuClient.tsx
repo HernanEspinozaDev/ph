@@ -33,14 +33,14 @@ export default function MenuClient({ products }: { products: Product[], groups?:
             {/* --- DESKTOP SIDEBAR --- */}
             <MenuSidebar
                 activeGroup={activeId}
-                onSelectGroup={(id) => scrollToSection(id, 0)}
+                onSelectGroup={(id) => scrollToSection(id, 80)}
                 groups={groups}
             />
 
             {/* --- MOBILE NAVBAR --- */}
             <MobileMenuNav
                 activeGroup={activeId}
-                onSelectGroup={(id) => scrollToSection(id)}
+                onSelectGroup={(id) => scrollToSection(id, 240)}
                 groups={groups}
             />
 

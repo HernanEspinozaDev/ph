@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useScrollSpy(ids: string[], offset: number = 150) {
+export function useScrollSpy(ids: string[], offset: number = 250) {
     const [activeId, setActiveId] = useState<string>(ids[0]);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export function useScrollSpy(ids: string[], offset: number = 150) {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [ids, offset]);
 
-    const scrollToSection = (id: string, headerOffset: number = 100) => {
+    const scrollToSection = (id: string, headerOffset: number = 220) => {
         const section = document.getElementById(id);
         if (section) {
             window.scrollTo({
