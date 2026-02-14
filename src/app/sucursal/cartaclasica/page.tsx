@@ -12,6 +12,11 @@ const groupItemsByCategory = (items: Product[]) => {
     const groups: Record<string, any[]> = {};
 
     items.forEach(item => {
+        // Filter out items with stock management enabled and 0 stock
+        if (item.gestionar_stock === 1 && item.stock <= 0) {
+            return;
+        }
+
         const category = item.categoria || 'Otros';
         if (!groups[category]) {
             groups[category] = [];

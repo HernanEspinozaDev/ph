@@ -28,11 +28,6 @@ export default function MenuItem({ name, ingredients, price, imageUrl, stock, ge
                 <div className="flex justify-between items-baseline">
                     <h4 className="flex items-center gap-2">
                         {name}
-                        {gestionar_stock === 1 && (
-                            <span className={`text-[10px] font-normal px-1.5 py-0.5 rounded-full border ${stock > 0 ? 'border-green-200 text-green-700 bg-green-50' : 'border-red-200 text-red-700 bg-red-50'}`}>
-                                {stock > 0 ? `${stock} disp.` : 'Agotado'}
-                            </span>
-                        )}
                     </h4>
                     <span className="price">${price.toLocaleString('es-CL')}</span>
                 </div>
