@@ -63,7 +63,7 @@ export default function MenuClient({ products }: { products: Product[], groups?:
                         if (items.length === 0) return null;
 
                         return (
-                            <section key={group.id} id={group.id} className="scroll-mt-32 lg:scroll-mt-24">
+                            <section key={group.id} id={group.id} className="scroll-mt-48 lg:scroll-mt-40">
                                 <h2 className="text-2xl font-bold text-stone-800 mb-6 flex items-center gap-2">
                                     {group.id.toLowerCase() === 'promociones' && <span className="text-2xl">🔥</span>}
                                     {group.label}
