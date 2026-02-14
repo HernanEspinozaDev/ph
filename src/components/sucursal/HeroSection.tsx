@@ -29,8 +29,8 @@ export function HeroSection() {
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600"> Cartagena</span>
                 </h1>
                 <p className="mx-auto mb-10 max-w-2xl text-lg font-light text-gray-200 md:text-xl leading-relaxed">
-                    Sándwiches gigantes, completos clásicos y schops bien fríos.
-                    El sabor de siempre, con el toque moderno que te encanta.
+                    El sabor de siempre, con el cariño que nos une.
+                    Momentos dulces y salados para compartir, con el toque casero que te encanta.
                 </p>
 
                 <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
