@@ -21,7 +21,10 @@ export default function ProductQuickActions({ id, disponible: initialDisponible,
     // Sync state if props change (though typically this component drives the change)
     useEffect(() => { setDisponible(initialDisponible); }, [initialDisponible]);
     useEffect(() => { setGestionarStock(initialGestionarStock); }, [initialGestionarStock]);
-    useEffect(() => { setStock(initialStock); }, [initialStock]);
+    // REMOVED: useEffect(() => { setStock(initialStock); }, [initialStock]); 
+    // We do not sync stock from props to local state to avoid "fighting" the server revalidation during rapid edits.
+    // The user's local input is the source of truth while editing.
+
 
     const handleToggleDisponible = async (checked: boolean) => {
         setDisponible(checked); // Optimistic update

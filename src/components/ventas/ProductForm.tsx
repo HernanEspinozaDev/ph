@@ -70,7 +70,7 @@ export default function ProductForm({ product, categories }: { product: AdminPro
     return (
         <form action={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6 max-w-3xl mx-auto">
             <div className="flex justify-between items-center border-b pb-4 mb-4">
-                <h2 className="text-xl font-bold text-gray-800">Editar Producto</h2>
+                <h2 className="text-xl font-bold text-gray-800">{isNew ? 'Nuevo Producto' : 'Editar Producto'}</h2>
                 <Link href="/ventas" className="text-gray-500 hover:text-gray-700">Cancelar</Link>
             </div>
 
