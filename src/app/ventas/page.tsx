@@ -1,8 +1,14 @@
-export default function DashboardPage() {
+import { getAdminProducts } from '@/app/actions/admin-products';
+import ProductList from '@/components/ventas/ProductList';
+
+export const runtime = 'edge';
+
+export default async function VentasPage() {
+    const products = await getAdminProducts();
+
     return (
-        <div className="p-8">
-            <h1 className="text-3xl font-bold mb-4">Bienvenido al Dashboard</h1>
-            <p className="text-gray-600">Panel de Administración de Ventas y Productos.</p>
+        <div>
+            <ProductList products={products} />
         </div>
     );
 }

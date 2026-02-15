@@ -7,9 +7,16 @@ binding = "DB"
 database_name = "pasteleria-db"
 database_id = "f7985336-a478-4502-84a5-8b40835559dc"
 
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "pasteleria-assets"
+
 # ==============================================================================
 # ENTORNO DE STAGING (PRUEBAS)
 # ==============================================================================
+[vars]
+R2_DOMAIN = "https://imagenes.pasteleriahijitos.cl"
+
 [env.staging]
 name = "pasteleria-hijitos-staging"
 
@@ -18,6 +25,13 @@ name = "pasteleria-hijitos-staging"
 binding = "DB"
 database_name = "pasteleria-db-staging"
 database_id = "f6441f94-2923-4388-8172-8e616c553ca7"
+
+[[env.staging.r2_buckets]]
+binding = "ASSETS"
+bucket_name = "pasteleria-assets"
+
+[env.staging.vars]
+R2_DOMAIN = "https://imagenes.pasteleriahijitos.cl"
 
 # Configuration for Cloudflare Pages Preview environments (all non-production branches)
 [env.preview]
