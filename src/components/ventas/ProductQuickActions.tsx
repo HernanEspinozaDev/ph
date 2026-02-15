@@ -3,7 +3,6 @@
 import { toggleProductAvailability, toggleProductStockManagement, updateProductStock } from '@/app/actions/product-quick-actions';
 import ToggleSwitch from '@/components/ui/ToggleSwitch';
 import { useState, useEffect } from 'react';
-import { useDebounce } from 'use-debounce';
 
 interface ProductQuickActionsProps {
     id: number;
@@ -21,10 +20,8 @@ export default function ProductQuickActions({ id, disponible: initialDisponible,
     // Sync state if props change (though typically this component drives the change)
     useEffect(() => { setDisponible(initialDisponible); }, [initialDisponible]);
     useEffect(() => { setGestionarStock(initialGestionarStock); }, [initialGestionarStock]);
-    // REMOVED: useEffect(() => { setStock(initialStock); }, [initialStock]); 
     // We do not sync stock from props to local state to avoid "fighting" the server revalidation during rapid edits.
     // The user's local input is the source of truth while editing.
-
 
     const handleToggleDisponible = async (checked: boolean) => {
         setDisponible(checked); // Optimistic update
@@ -36,12 +33,20 @@ export default function ProductQuickActions({ id, disponible: initialDisponible,
         await toggleProductStockManagement(id, checked);
     };
 
-    // Effect to trigger server update when debounced stock changes
-    useEffect(() => {
-        if (debouncedStock !== initialStock) {
-            updateProductStock(id, debouncedStock);
-        }
-    }, [debouncedStock, id, initialStock]);
+    const handleSaveStock = async () => {
+        await updateProductStock(id, stock);
+        // We rely on the server revalidation to eventually update 'initialStock' prop
+        // but since we decoupled local state from props (commented out useEffect), 
+        // the button will remain "dirty" until we perhaps force a sync or just leave it.
+        // Better UX: update the "initial" reference for comparison so the button hides.
+        // But we can't easily mutate props. 
+        // Actually, revalidation WILL update the component with new props.
+        // So we SHOULD re-enable the prop sync but ONLY if it matches our saved value?
+        // Simplest for now: hide button on click by assuming success, or just rely on re-render.
+        // Let's rely on Validated Path from server to re-render this component with new initialStock.
+    };
+
+    const isDirty = stock !== initialStock;
 
     const incrementStock = () => setStock(s => s + 1);
     const decrementStock = () => setStock(s => Math.max(0, s - 1));
@@ -81,6 +86,18 @@ export default function ProductQuickActions({ id, disponible: initialDisponible,
                         >
                             +
                         </button>
+
+                        {isDirty && (
+                            <button
+                                onClick={handleSaveStock}
+                                className="ml-2 bg-green-500 hover:bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-sm transition-all transform hover:scale-105 focus:outline-none"
+                                title="Guardar cambios de stock"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                            </button>
+                        )}
                     </div>
                 )}
             </div>

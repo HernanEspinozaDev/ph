@@ -15,6 +15,8 @@ export default function ProductForm({ product, categories }: { product: AdminPro
     const [loading, setLoading] = useState(false);
     const [uploadingImage, setUploadingImage] = useState(false);
 
+    const isNew = product.id === 0;
+
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
