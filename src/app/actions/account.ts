@@ -32,7 +32,7 @@ export async function changePassword(prevState: any, formData: FormData) {
         const db = env.DB;
 
         // Get user from DB to verify current password
-        const { results } = await db.prepare('SELECT * FROM usuarios WHERE id = ?').bind(session.id).all<any>();
+        const { results } = await db.prepare('SELECT * FROM users WHERE id = ?').bind(session.id).all<any>();
         const user = results[0];
 
         if (!user) {
@@ -48,7 +48,7 @@ export async function changePassword(prevState: any, formData: FormData) {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         // Update password
-        await db.prepare('UPDATE usuarios SET password = ? WHERE id = ?')
+        await db.prepare('UPDATE users SET password_hash = ? WHERE id = ?')
             .bind(hashedPassword, session.id)
             .run();
 
