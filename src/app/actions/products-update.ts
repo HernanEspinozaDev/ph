@@ -74,15 +74,19 @@ export async function updateProduct(id: number, formData: FormData) {
         throw new Error("Failed to update product");
     }
 
-    revalidatePath('/ventas');
+    revalidatePath('/ventas/productos');
     revalidatePath(`/ventas/producto/${id}`);
-    redirect('/ventas');
+    redirect('/ventas/productos');
 }
 
 export async function createProduct(formData: FormData) {
+    console.log("Starting createProduct...");
     const { env } = getRequestContext();
     const db = env.DB;
-    if (!db) throw new Error("Database not available");
+    if (!db) {
+        console.error("Database unavailable");
+        throw new Error("Database not available");
+    }
 
     const nombre = formData.get('nombre') as string;
     const descripcion = formData.get('descripcion') as string;
@@ -94,8 +98,10 @@ export async function createProduct(formData: FormData) {
     const stock = parseInt(formData.get('stock') as string) || 0;
     const imagen_url = formData.get('imagen_url') as string;
 
+    console.log("Data to insert:", { nombre, precio, categoria_id, disponible, gestionar_stock, stock });
+
     try {
-        await db.prepare(`
+        const result = await db.prepare(`
             INSERT INTO productos (
                 nombre, descripcion, precio, categoria_id, ingredientes, 
                 disponible, gestionar_stock, stock, imagen_url
@@ -104,12 +110,13 @@ export async function createProduct(formData: FormData) {
             nombre, descripcion, precio, categoria_id, ingredientes,
             disponible, gestionar_stock, stock, imagen_url
         ).run();
+        console.log("Insert result:", result);
     } catch (e) {
         console.error("Error creating product:", e);
         throw new Error("Failed to create product");
     }
 
-    revalidatePath('/ventas');
-    redirect('/ventas');
+    revalidatePath('/ventas/productos');
+    redirect('/ventas/productos');
 }
 

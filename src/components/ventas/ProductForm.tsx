@@ -61,12 +61,38 @@ export default function ProductForm({ product, categories }: { product: AdminPro
 
     // We wrapper the action to handle loading state
     const handleSubmit = async (formData: FormData) => {
+        // Client-side validation
+        const nombre = formData.get('nombre') as string;
+        const precio = parseFloat(formData.get('precio') as string);
+
+        if (!nombre || nombre.trim() === '') {
+            alert('El nombre es obligatorio.');
+            return;
+        }
+        if (isNaN(precio) || precio < 0) {
+            alert('El precio debe ser un número válido mayor o igual a 0.');
+            return;
+        }
+
+        if (!confirm('¿Estás seguro de guardar los cambios?')) {
+            return;
+        }
+
         setLoading(true);
-        // Add switch values manually if needed, but <input type="hidden"> inside conditional rendering works too.
-        // However, standard form submission might confirm if unchecked checkboxes send nothing.
-        // Let's use hidden inputs controlled by state for robust handling.
-        await updateProduct(product.id, formData);
-        // No need to set loading false as it redirects.
+        try {
+            if (isNew) {
+                await createProduct(formData);
+            } else {
+                await updateProduct(product.id, formData);
+            }
+            // If successful, redirect happens on server. 
+            // We can optionally alert success here, but redirect is usually enough.
+            // alert('Producto guardado correctamente'); 
+        } catch (error) {
+            console.error(error);
+            alert('Hubo un error al guardar el producto. Por favor revisa los datos e inténtalo de nuevo.');
+            setLoading(false);
+        }
     };
 
     return (
