@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getRequestContext } from '@cloudflare/next-on-pages';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 export const runtime = 'edge';
 
@@ -16,23 +17,9 @@ export async function POST(request: NextRequest) {
         }
 
         const { env } = getRequestContext();
-        // Fallback for local development if needed, but bindings are preferred
-        const bucket = env.ASSETS;
+        // Bindings are preferred
+        let bucket = env.ASSETS;
         const r2Domain = env.R2_DOMAIN || 'https://imagenes.pasteleriahijitos.cl';
-
-        console.log("Environment check:", {
-            hasBucket: !!bucket,
-            r2Domain,
-            categoryName,
-            fileName: file.name,
-            fileType: file.type,
-            fileSize: file.size
-        });
-
-        if (!bucket) {
-            console.error('R2 binding ASSETS not found. Check wrangler.toml and Cloudflare dashboard.');
-            return NextResponse.json({ error: 'Server configuration error: ASSETS binding missing' }, { status: 500 });
-        }
 
         // Validate file type
         if (!file.type.startsWith('image/')) {
@@ -41,42 +28,67 @@ export async function POST(request: NextRequest) {
         }
 
         // Sanitize category name
-        // Replace spaces with dashes, remove special chars, keep alphanumeric
         const safeCategory = categoryName
             ? categoryName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, '-')
             : 'uncategorized';
 
-        // Use original filename (sanitized) or generate random
-        // User requested maintaining names like "americana.webp"
-        // Let's try to use the original name but sanitize it
         const originalName = file.name.split('.')[0];
         const safeName = originalName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, '-');
-        const extension = 'webp'; // Frontend converts to webp
-
+        const extension = 'webp';
         const key = `carta/${safeCategory}/${safeName}.${extension}`;
 
         console.log(`Uploading to key: ${key}`);
 
-        // Upload to R2
-        try {
-            // Convert File to ArrayBuffer to avoid serialization issues
-            const arrayBuffer = await file.arrayBuffer();
+        // Convert File to ArrayBuffer
+        const arrayBuffer = await file.arrayBuffer();
 
-            await bucket.put(key, arrayBuffer, {
-                httpMetadata: {
-                    contentType: 'image/webp', // Force content type
-                }
-            });
-            console.log("Upload successful");
-        } catch (uploadError) {
-            console.error("R2 put error:", uploadError);
-            throw uploadError;
+        // Try R2 Binding first
+        if (bucket) {
+            try {
+                await bucket.put(key, arrayBuffer, {
+                    httpMetadata: { contentType: 'image/webp' }
+                });
+                console.log("Upload successful via R2 Binding");
+                const publicUrl = `${r2Domain}/${key}`;
+                return NextResponse.json({ url: publicUrl });
+            } catch (err: any) {
+                console.warn("R2 Binding failed, trying S3 fallback if credentials exist...", err.message);
+                // "The RPC receiver does not implement the method" is the error we see
+            }
         }
 
-        // Construct public URL
-        const publicUrl = `${r2Domain}/${key}`;
+        // Fallback: S3 Client (for local dev or if binding fails)
+        // Requires env vars: R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY
+        // These can be set in .env.local
+        const accountId = process.env.R2_ACCOUNT_ID || 'f9f7037e5c7f3cc70c00a2c1f40fe6dd';
+        const accessKeyId = process.env.R2_ACCESS_KEY_ID;
+        const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
 
-        return NextResponse.json({ url: publicUrl });
+        if (accountId && accessKeyId && secretAccessKey) {
+            console.log("Using S3 Client fallback...");
+            const S3 = new S3Client({
+                region: 'auto',
+                endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
+                credentials: {
+                    accessKeyId,
+                    secretAccessKey,
+                },
+            });
+
+            await S3.send(new PutObjectCommand({
+                Bucket: 'pasteleria-assets',
+                Key: key,
+                Body: Buffer.from(arrayBuffer), // AWS SDK likes Buffer or Uint8Array
+                ContentType: 'image/webp',
+            }));
+
+            console.log("Upload successful via S3 Client");
+            const publicUrl = `${r2Domain}/${key}`;
+            return NextResponse.json({ url: publicUrl });
+        }
+
+        console.error('R2 binding failed and no S3 credentials provided for fallback.');
+        return NextResponse.json({ error: 'Server configuration error: Upload failed via Binding and no S3 Fallback credentials found.' }, { status: 500 });
 
     } catch (error) {
         console.error('Upload error (top level):', error);
