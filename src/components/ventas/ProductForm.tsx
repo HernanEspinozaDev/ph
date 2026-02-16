@@ -41,9 +41,14 @@ export default function ProductForm({ product, categories }: { product: AdminPro
             const categoryId = parseInt(select?.value || String(product.categoria_id));
             const categoryName = categories.find(c => c.id === categoryId)?.nombre || 'uncategorized';
 
+            // Get product name for filename
+            const nameInput = document.querySelector('input[name="nombre"]') as HTMLInputElement;
+            const productName = nameInput?.value || 'producto-sin-nombre';
+
             const formData = new FormData();
             formData.append('file', compressedFile);
             formData.append('categoryName', categoryName);
+            formData.append('productName', productName);
 
             const res = await fetch('/api/upload', {
                 method: 'POST',

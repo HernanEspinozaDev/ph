@@ -10,6 +10,7 @@ export async function POST(request: NextRequest) {
         const formData = await request.formData();
         const file = formData.get('file') as File;
         const categoryName = formData.get('categoryName') as string;
+        const productName = formData.get('productName') as string; // Receive product name
 
         if (!file) {
             console.error("No file in formData");
@@ -32,9 +33,19 @@ export async function POST(request: NextRequest) {
             ? categoryName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, '-')
             : 'uncategorized';
 
-        const originalName = file.name.split('.')[0];
-        const safeName = originalName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, '-');
+        // Use productName if available, otherwise original filename
+        const rawName = productName || file.name.split('.')[0];
+        const safeName = rawName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, '-');
+
+        // Add timestamp to prevent caching issues or overwrites if desired, OR keep clean name
+        // User asked to name it as the product. Let's append a small random string to avoid cache collision if they update image?
+        // Or just keep it clean. Let's keep it clean but maybe add timestamp if it's "producto-sin-nombre"
+        // Actually, cleaner is better for SEO/URL reading. Let's just use safeName.
+        // But if they upload multiple times, browser cache might be an issue. Let's use clean name + timestamp for uniqueness?
+        // User asked "asi se renombra con ese nombre". Let's stick to safeName.
         const extension = 'webp';
+
+        // If we strictly want product name:
         const key = `carta/${safeCategory}/${safeName}.${extension}`;
 
         console.log(`Uploading to key: ${key}`);
@@ -59,18 +70,23 @@ export async function POST(request: NextRequest) {
         }
 
         // Fallback: S3 Client (for local dev or if binding fails)
-        // Helper to get env value even if key has trailing spaces
+        // Helper to get env value even if key has trailing spaces AND TRIM VALUE
         const getEnvVar = (key: string) => {
-            if (process.env[key]) return process.env[key];
-            if ((env as any)[key]) return (env as any)[key];
-            // Fuzzy search in env object
-            const fuzzyKey = Object.keys(env as any).find(k => k.trim() === key);
-            if (fuzzyKey) return (env as any)[fuzzyKey];
-            return undefined;
+            let val = undefined;
+            if (process.env[key]) val = process.env[key];
+            else if ((env as any)[key]) val = (env as any)[key];
+            else {
+                // Fuzzy search in env object
+                const fuzzyKey = Object.keys(env as any).find(k => k.trim() === key);
+                if (fuzzyKey) val = (env as any)[fuzzyKey];
+            }
+
+            // TRIM VALUE to fix "Invalid header value" errors
+            return val ? String(val).trim() : undefined;
         };
 
         const envVars = env as any;
-        console.log("Debug: Available Env Keys (Raw):", Object.keys(envVars).map(k => `"${k}"`)); // Quote keys to see spaces
+        console.log("Debug: Available Env Keys (Raw):", Object.keys(envVars).map(k => `"${k}"`));
 
         const accountId = getEnvVar('R2_ACCOUNT_ID') || 'f9f7037e5c7f3cc70c00a2c1f40fe6dd';
         const accessKeyId = getEnvVar('R2_ACCESS_KEY_ID');
