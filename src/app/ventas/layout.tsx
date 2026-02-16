@@ -30,6 +30,12 @@ export default function DashboardLayout({
                                 >
                                     Categorías
                                 </Link>
+                                <Link
+                                    href="/ventas/perfil"
+                                    className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                                >
+                                    Perfil / Configuración
+                                </Link>
                             </div>
                         </div>
                         <div className="flex items-center">
@@ -51,6 +57,7 @@ export default function DashboardLayout({
                     <div className="grid grid-cols-2 gap-4 p-4 text-center">
                         <Link href="/ventas" className="text-sm font-medium text-gray-700 hover:text-blue-600">Productos</Link>
                         <Link href="/ventas/categorias" className="text-sm font-medium text-gray-700 hover:text-blue-600">Categorías</Link>
+                        <Link href="/ventas/perfil" className="text-sm font-medium text-gray-700 hover:text-blue-600">Perfil</Link>
                     </div>
                 </div>
             </nav>
