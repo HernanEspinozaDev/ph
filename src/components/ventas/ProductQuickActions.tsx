@@ -15,7 +15,6 @@ export default function ProductQuickActions({ id, disponible: initialDisponible,
     const [disponible, setDisponible] = useState(initialDisponible);
     const [gestionarStock, setGestionarStock] = useState(initialGestionarStock);
     const [stock, setStock] = useState(initialStock);
-    const [debouncedStock] = useDebounce(stock, 500);
 
     // Sync state if props change (though typically this component drives the change)
     useEffect(() => { setDisponible(initialDisponible); }, [initialDisponible]);

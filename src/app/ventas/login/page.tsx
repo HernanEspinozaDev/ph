@@ -23,10 +23,10 @@ export default function LoginPage() {
             });
 
             if (res.ok) {
-                router.push('/ventas');
-                router.refresh();
+                // Force hard navigation to ensure clean state and middleware pass
+                window.location.href = '/ventas';
             } else {
-                const data = await res.json();
+                const data = await res.json() as { error?: string };
                 setError(data.error || 'Login failed');
             }
         } catch (err) {
