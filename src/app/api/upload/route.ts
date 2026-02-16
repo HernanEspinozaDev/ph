@@ -59,7 +59,10 @@ export async function POST(request: NextRequest) {
 
         // Upload to R2
         try {
-            await bucket.put(key, file, {
+            // Convert File to ArrayBuffer to avoid serialization issues
+            const arrayBuffer = await file.arrayBuffer();
+
+            await bucket.put(key, arrayBuffer, {
                 httpMetadata: {
                     contentType: 'image/webp', // Force content type
                 }
