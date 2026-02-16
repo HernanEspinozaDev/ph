@@ -2,6 +2,8 @@ import { getSession } from '@/lib/session';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+export const runtime = 'edge';
+
 export default async function DashboardPage() {
     const session = await getSession();
 
