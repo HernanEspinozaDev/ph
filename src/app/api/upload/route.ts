@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
         const arrayBuffer = await file.arrayBuffer();
 
         // Try R2 Binding first
+        let r2Error: any = null;
         if (bucket) {
             try {
                 await bucket.put(key, arrayBuffer, {
@@ -52,8 +53,8 @@ export async function POST(request: NextRequest) {
                 const publicUrl = `${r2Domain}/${key}`;
                 return NextResponse.json({ url: publicUrl });
             } catch (err: any) {
+                r2Error = err;
                 console.warn("R2 Binding failed, trying S3 fallback if credentials exist...", err.message);
-                // "The RPC receiver does not implement the method" is the error we see
             }
         }
 
@@ -89,7 +90,7 @@ export async function POST(request: NextRequest) {
             await S3.send(new PutObjectCommand({
                 Bucket: 'pasteleria-assets',
                 Key: key,
-                Body: Buffer.from(arrayBuffer), // AWS SDK likes Buffer or Uint8Array
+                Body: Buffer.from(arrayBuffer),
                 ContentType: 'image/webp',
             }));
 
@@ -98,8 +99,21 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ url: publicUrl });
         }
 
-        console.error('R2 binding failed and no S3 credentials provided for fallback.');
-        return NextResponse.json({ error: 'Server configuration error: Upload failed via Binding and no S3 Fallback credentials found.' }, { status: 500 });
+        // Collect debug info for the client error
+        const debugInfo = {
+            hasBucket: !!bucket,
+            r2Error: r2Error ? r2Error.message : 'No binding error',
+            envKeys: Object.keys(envVars),
+            hasAccId: !!accountId,
+            hasKeyId: !!accessKeyId,
+            hasSecret: !!secretAccessKey
+        };
+
+        console.error('R2 binding failed and no S3 credentials provided for fallback.', debugInfo);
+        return NextResponse.json({
+            error: 'Upload Failed',
+            details: `Binding failed (${debugInfo.r2Error}) & No S3 Creds. Env Keys: ${debugInfo.envKeys.join(', ')}`
+        }, { status: 500 });
 
     } catch (error) {
         console.error('Upload error (top level):', error);
