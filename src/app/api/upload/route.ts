@@ -59,15 +59,22 @@ export async function POST(request: NextRequest) {
         }
 
         // Fallback: S3 Client (for local dev or if binding fails)
-        // Check both process.env (build time/local) and env object (runtime vars)
-        // We cast env to any to access keys that might not be in the interface yet or dynamic
+        // Helper to get env value even if key has trailing spaces
+        const getEnvVar = (key: string) => {
+            if (process.env[key]) return process.env[key];
+            if ((env as any)[key]) return (env as any)[key];
+            // Fuzzy search in env object
+            const fuzzyKey = Object.keys(env as any).find(k => k.trim() === key);
+            if (fuzzyKey) return (env as any)[fuzzyKey];
+            return undefined;
+        };
+
         const envVars = env as any;
+        console.log("Debug: Available Env Keys (Raw):", Object.keys(envVars).map(k => `"${k}"`)); // Quote keys to see spaces
 
-        console.log("Debug: Available Env Keys:", Object.keys(envVars));
-
-        const accountId = process.env.R2_ACCOUNT_ID || envVars.R2_ACCOUNT_ID || 'f9f7037e5c7f3cc70c00a2c1f40fe6dd';
-        const accessKeyId = process.env.R2_ACCESS_KEY_ID || envVars.R2_ACCESS_KEY_ID;
-        const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY || envVars.R2_SECRET_ACCESS_KEY;
+        const accountId = getEnvVar('R2_ACCOUNT_ID') || 'f9f7037e5c7f3cc70c00a2c1f40fe6dd';
+        const accessKeyId = getEnvVar('R2_ACCESS_KEY_ID');
+        const secretAccessKey = getEnvVar('R2_SECRET_ACCESS_KEY');
 
         console.log("Fallback Credentials Check:", {
             hasAccountId: !!accountId,
