@@ -39,7 +39,7 @@ export async function changePassword(prevState: any, formData: FormData) {
             return { success: false, message: 'Usuario no encontrado.' };
         }
 
-        const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+        const passwordMatch = await bcrypt.compare(currentPassword, user.password_hash);
         if (!passwordMatch) {
             return { success: false, message: 'La contraseña actual es incorrecta.' };
         }
@@ -54,8 +54,8 @@ export async function changePassword(prevState: any, formData: FormData) {
 
         return { success: true, message: 'Contraseña actualizada correctamente.' };
 
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error changing password:', error);
-        return { success: false, message: 'Error al actualizar la contraseña.' };
+        return { success: false, message: `Error al actualizar la contraseña: ${error.message}` };
     }
 }
