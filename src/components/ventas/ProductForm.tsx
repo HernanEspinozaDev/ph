@@ -2,7 +2,7 @@
 
 import { AdminProduct } from '@/app/actions/admin-products';
 import { Category } from '@/app/actions/categories';
-import { updateProduct } from '@/app/actions/products-update';
+import { updateProduct, createProduct } from '@/app/actions/products-update';
 import ToggleSwitch from '@/components/ui/ToggleSwitch';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -88,7 +88,11 @@ export default function ProductForm({ product, categories }: { product: AdminPro
             // If successful, redirect happens on server. 
             // We can optionally alert success here, but redirect is usually enough.
             // alert('Producto guardado correctamente'); 
-        } catch (error) {
+        } catch (error: any) {
+            // Next.js redirect() throws a "NEXT_REDIRECT" error, which we should ignore/rethrow
+            if (error.message === 'NEXT_REDIRECT') {
+                throw error;
+            }
             console.error(error);
             alert('Hubo un error al guardar el producto. Por favor revisa los datos e inténtalo de nuevo.');
             setLoading(false);
