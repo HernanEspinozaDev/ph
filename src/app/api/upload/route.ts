@@ -58,11 +58,22 @@ export async function POST(request: NextRequest) {
         }
 
         // Fallback: S3 Client (for local dev or if binding fails)
-        // Requires env vars: R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY
-        // These can be set in .env.local
-        const accountId = process.env.R2_ACCOUNT_ID || 'f9f7037e5c7f3cc70c00a2c1f40fe6dd';
-        const accessKeyId = process.env.R2_ACCESS_KEY_ID;
-        const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
+        // Check both process.env (build time/local) and env object (runtime vars)
+        // We cast env to any to access keys that might not be in the interface yet or dynamic
+        const envVars = env as any;
+
+        console.log("Debug: Available Env Keys:", Object.keys(envVars));
+
+        const accountId = process.env.R2_ACCOUNT_ID || envVars.R2_ACCOUNT_ID || 'f9f7037e5c7f3cc70c00a2c1f40fe6dd';
+        const accessKeyId = process.env.R2_ACCESS_KEY_ID || envVars.R2_ACCESS_KEY_ID;
+        const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY || envVars.R2_SECRET_ACCESS_KEY;
+
+        console.log("Fallback Credentials Check:", {
+            hasAccountId: !!accountId,
+            hasAccessKey: !!accessKeyId,
+            hasSecret: !!secretAccessKey,
+            accessKeyPrefix: accessKeyId ? accessKeyId.substring(0, 4) + '...' : 'none'
+        });
 
         if (accountId && accessKeyId && secretAccessKey) {
             console.log("Using S3 Client fallback...");

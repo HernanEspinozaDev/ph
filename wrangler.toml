@@ -44,3 +44,6 @@ database_id = "f6441f94-2923-4388-8172-8e616c553ca7"
 [[env.preview.r2_buckets]]
 binding = "ASSETS"
 bucket_name = "pasteleria-assets"
+
+[env.preview.vars]
+R2_DOMAIN = "https://imagenes.pasteleriahijitos.cl"
