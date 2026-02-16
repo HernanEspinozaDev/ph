@@ -44,6 +44,10 @@ export async function updateProduct(id: number, formData: FormData) {
     const stock = parseInt(formData.get('stock') as string) || 0;
     const imagen_url = formData.get('imagen_url') as string; // Readonly for now
 
+    // Fetch category name
+    const { results: catResults } = await db.prepare('SELECT nombre FROM categorias WHERE id = ?').bind(categoria_id).all<{ nombre: string }>();
+    const categoriaNombre = catResults[0]?.nombre || 'Sin Categoría';
+
     try {
         await db.prepare(`
             UPDATE productos SET 
@@ -51,6 +55,7 @@ export async function updateProduct(id: number, formData: FormData) {
                 descripcion = ?, 
                 precio = ?, 
                 categoria_id = ?, 
+                categoria = ?,
                 ingredientes = ?, 
                 disponible = ?, 
                 gestionar_stock = ?, 
@@ -62,6 +67,7 @@ export async function updateProduct(id: number, formData: FormData) {
             descripcion,
             precio,
             categoria_id,
+            categoriaNombre,
             ingredientes,
             disponible,
             gestionar_stock,
@@ -76,7 +82,7 @@ export async function updateProduct(id: number, formData: FormData) {
 
     revalidatePath('/ventas/productos');
     revalidatePath(`/ventas/producto/${id}`);
-    redirect('/ventas/productos');
+    return { success: true };
 }
 
 export async function createProduct(formData: FormData) {
@@ -98,16 +104,20 @@ export async function createProduct(formData: FormData) {
     const stock = parseInt(formData.get('stock') as string) || 0;
     const imagen_url = formData.get('imagen_url') as string;
 
-    console.log("Data to insert:", { nombre, precio, categoria_id, disponible, gestionar_stock, stock });
+    // Fetch category name
+    const { results: catResults } = await db.prepare('SELECT nombre FROM categorias WHERE id = ?').bind(categoria_id).all<{ nombre: string }>();
+    const categoriaNombre = catResults[0]?.nombre || 'Sin Categoría';
+
+    console.log("Data to insert:", { nombre, precio, categoria_id, categoriaNombre, disponible, gestionar_stock, stock });
 
     try {
         const result = await db.prepare(`
             INSERT INTO productos (
-                nombre, descripcion, precio, categoria_id, ingredientes, 
+                nombre, descripcion, precio, categoria_id, categoria, ingredientes, 
                 disponible, gestionar_stock, stock, imagen_url
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `).bind(
-            nombre, descripcion, precio, categoria_id, ingredientes,
+            nombre, descripcion, precio, categoria_id, categoriaNombre, ingredientes,
             disponible, gestionar_stock, stock, imagen_url
         ).run();
         console.log("Insert result:", result);
@@ -117,6 +127,6 @@ export async function createProduct(formData: FormData) {
     }
 
     revalidatePath('/ventas/productos');
-    redirect('/ventas/productos');
+    return { success: true };
 }
 

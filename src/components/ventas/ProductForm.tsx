@@ -6,6 +6,7 @@ import { updateProduct, createProduct } from '@/app/actions/products-update';
 import ToggleSwitch from '@/components/ui/ToggleSwitch';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import imageCompression from 'browser-image-compression';
 
 export default function ProductForm({ product, categories }: { product: AdminProduct, categories: Category[] }) {
@@ -14,6 +15,8 @@ export default function ProductForm({ product, categories }: { product: AdminPro
     const [imageUrl, setImageUrl] = useState(product.imagen_url || '');
     const [loading, setLoading] = useState(false);
     const [uploadingImage, setUploadingImage] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const router = useRouter();
 
     const isNew = product.id === 0;
 
@@ -79,31 +82,49 @@ export default function ProductForm({ product, categories }: { product: AdminPro
         }
 
         setLoading(true);
+        setSuccessMessage('');
         try {
+            let result;
             if (isNew) {
-                await createProduct(formData);
+                result = await createProduct(formData);
             } else {
-                await updateProduct(product.id, formData);
+                result = await updateProduct(product.id, formData);
             }
-            // If successful, redirect happens on server. 
-            // We can optionally alert success here, but redirect is usually enough.
-            // alert('Producto guardado correctamente'); 
+
+            if (result && result.success) {
+                setSuccessMessage(isNew ? 'Producto creado correctamente' : 'Producto editado correctamente');
+                // Wait 2 seconds before redirecting
+                setTimeout(() => {
+                    router.push('/ventas/productos');
+                    router.refresh();
+                }, 2000);
+            }
         } catch (error: any) {
-            // Next.js redirect() throws a "NEXT_REDIRECT" error, which we should ignore/rethrow
-            if (error.message === 'NEXT_REDIRECT') {
-                throw error;
-            }
             console.error(error);
             alert('Hubo un error al guardar el producto. Por favor revisa los datos e inténtalo de nuevo.');
             setLoading(false);
         }
     };
 
+    if (successMessage) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
+                <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg shadow-sm text-lg font-medium flex items-center">
+                    <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    {successMessage}
+                </div>
+                <p className="text-gray-500">Redirigiendo a productos...</p>
+            </div>
+        );
+    }
+
     return (
         <form action={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6 max-w-3xl mx-auto">
             <div className="flex justify-between items-center border-b pb-4 mb-4">
                 <h2 className="text-xl font-bold text-gray-800">{isNew ? 'Nuevo Producto' : 'Editar Producto'}</h2>
-                <Link href="/ventas" className="text-gray-500 hover:text-gray-700">Cancelar</Link>
+                <Link href="/ventas/productos" className="text-gray-500 hover:text-gray-700">Cancelar</Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
