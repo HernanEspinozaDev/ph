@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 export default function CategoryManager({ categories }: { categories: Category[] }) {
     const [isCreating, setIsCreating] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
     return (
         <div className="space-y-8">
@@ -13,13 +14,34 @@ export default function CategoryManager({ categories }: { categories: Category[]
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                 <h2 className="text-lg font-bold text-gray-800 mb-4">Nueva Categoría</h2>
                 <form action={async (formData) => {
+                    const nombre = formData.get('nombre') as string;
+                    if (!nombre || nombre.trim() === '') {
+                        alert('El nombre es obligatorio.');
+                        return;
+                    }
+
+                    if (!confirm('¿Estás seguro de crear esta categoría?')) {
+                        return;
+                    }
+
                     setIsCreating(true);
-                    await createCategory(formData);
-                    setIsCreating(false);
-                    // Reset form is harder with server actions without JS, but form resets on navigation/revalidation usually if simpler
-                    // We can use a ref to form if needed to reset, or just simple controlled input
-                    const form = document.getElementById('create-cat-form') as HTMLFormElement;
-                    form?.reset();
+                    setSuccessMessage('');
+
+                    try {
+                        const result = await createCategory(formData);
+                        if (result && result.success) {
+                            setSuccessMessage('Categoría creada correctamente');
+                            const form = document.getElementById('create-cat-form') as HTMLFormElement;
+                            form?.reset();
+                            // Hide success message after 3 seconds
+                            setTimeout(() => setSuccessMessage(''), 3000);
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        alert('Error al crear la categoría.');
+                    } finally {
+                        setIsCreating(false);
+                    }
                 }} id="create-cat-form" className="flex gap-4 items-end">
                     <div className="flex-grow">
                         <label className="block text-sm font-medium text-gray-700">Nombre</label>
@@ -33,6 +55,14 @@ export default function CategoryManager({ categories }: { categories: Category[]
                         {isCreating ? 'Creando...' : 'Crear'}
                     </button>
                 </form>
+                {successMessage && (
+                    <div className="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded-md flex items-center animate-fadeIn">
+                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        {successMessage}
+                    </div>
+                )}
             </div>
 
             {/* List */}

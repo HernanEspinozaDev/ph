@@ -50,13 +50,16 @@ export default function ProductForm({ product, categories }: { product: AdminPro
                 body: formData
             });
 
-            if (!res.ok) throw new Error('Upload failed');
+            if (!res.ok) {
+                const errorData = await res.json() as { error: string, details?: string };
+                throw new Error(errorData.details || errorData.error || 'Upload failed');
+            }
 
             const data = await res.json() as { url: string };
             setImageUrl(data.url);
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error uploading image:', error);
-            alert('Error al subir la imagen. Inténtalo de nuevo.');
+            alert(`Error al subir la imagen: ${error.message}`);
         } finally {
             setUploadingImage(false);
         }

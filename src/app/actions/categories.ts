@@ -41,6 +41,7 @@ export async function createCategory(formData: FormData) {
 
     revalidatePath('/ventas/categorias');
     revalidatePath('/ventas'); // Update product list filters/labels potentially
+    return { success: true };
 }
 
 export async function updateCategory(id: number, active: boolean, order: number) {
