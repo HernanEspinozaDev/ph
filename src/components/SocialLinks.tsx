@@ -31,7 +31,6 @@ export function SocialLinks({ className = "", tikTokClassName = "text-black" }: 
         <div className={`flex items-center gap-4 justify-center ${className}`}>
             <SocialLink
                 platform="facebook"
-                id="123456789" // Placeholder: User needs to update this with Numeric ID
                 webUrl="https://www.facebook.com/pasteleria.hijitos"
                 className="text-[#1877F2] hover:opacity-80 transition-opacity"
             >
@@ -49,7 +48,6 @@ export function SocialLinks({ className = "", tikTokClassName = "text-black" }: 
 
             <SocialLink
                 platform="tiktok"
-                id="pasteleria.hijitos" // For TikTok deep link, sometimes user ID is needed or just username works depending on scheme
                 username="pasteleria.hijitos"
                 webUrl="https://www.tiktok.com/@pasteleria.hijitos"
                 className={`${tikTokClassName} hover:opacity-80 transition-opacity`}

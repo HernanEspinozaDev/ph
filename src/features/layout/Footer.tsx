@@ -38,7 +38,6 @@ export function Footer() {
             <div className="flex gap-6 justify-center md:justify-end">
               <SocialLink
                 platform="facebook"
-                id="123456789" // Placeholder
                 webUrl="https://www.facebook.com/pasteleria.hijitos"
                 className="transition-opacity hover:opacity-70"
               >

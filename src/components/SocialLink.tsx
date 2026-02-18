@@ -35,16 +35,15 @@ export const SocialLink = ({ platform, username, id, webUrl, children, className
                 appUrl = `instagram://user?username=${username}`;
                 break;
             case 'facebook':
-                // Facebook suele requerir el ID numérico (ej: 123456789) no el alias
-                // Si es perfil: fb://profile/{id}
-                // Si es página: fb://page/{id}
-                appUrl = `fb://profile/${id}`;
+                // Usa facewebmodal para abrir con URL/username sin necesitar ID numérico
+                appUrl = `fb://facewebmodal/f?href=${encodeURIComponent(webUrl)}`;
                 break;
             case 'tiktok':
-                // TikTok suele funcionar bien con https, pero su esquema es:
-                appUrl = `snssdk1233://user/profile/${id}`;
-                // Nota: TikTok es complejo, a veces es mejor dejar el webUrl
-                break;
+                // TikTok maneja bien los Universal Links, mejor usar el webUrl directo para deep linking
+                // Si preferimos intentar esquema: `snssdk1233://user/profile/${id}` pero requiere ID numérico
+                // Dejamos que el fallback o el comportamiento por defecto maneje la redirección
+                window.open(webUrl, '_blank');
+                return;
             default:
                 window.open(webUrl, '_blank');
                 return;
