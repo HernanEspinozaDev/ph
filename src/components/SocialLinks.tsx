@@ -24,36 +24,39 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
+import { SocialLink } from './SocialLink';
+
 export function SocialLinks({ className = "", tikTokClassName = "text-black" }: { className?: string, tikTokClassName?: string }) {
     return (
         <div className={`flex items-center gap-4 justify-center ${className}`}>
-            <a
-                href="https://www.facebook.com/pasteleria.hijitos"
-                target="_blank"
-                rel="noopener noreferrer"
+            <SocialLink
+                platform="facebook"
+                id="123456789" // Placeholder: User needs to update this with Numeric ID
+                webUrl="https://www.facebook.com/pasteleria.hijitos"
                 className="text-[#1877F2] hover:opacity-80 transition-opacity"
-                aria-label="Facebook"
             >
                 <Facebook className="w-6 h-6" />
-            </a>
-            <a
-                href="https://instagram.com/pasteleria.hijitos/"
-                target="_blank"
-                rel="noopener noreferrer"
+            </SocialLink>
+
+            <SocialLink
+                platform="instagram"
+                username="pasteleria.hijitos"
+                webUrl="https://instagram.com/pasteleria.hijitos/"
                 className="text-[#E4405F] hover:opacity-80 transition-opacity"
-                aria-label="Instagram"
             >
                 <Instagram className="w-6 h-6" />
-            </a>
-            <a
-                href="https://www.tiktok.com/@pasteleria.hijitos"
-                target="_blank"
-                rel="noopener noreferrer"
+            </SocialLink>
+
+            <SocialLink
+                platform="tiktok"
+                id="pasteleria.hijitos" // For TikTok deep link, sometimes user ID is needed or just username works depending on scheme
+                username="pasteleria.hijitos"
+                webUrl="https://www.tiktok.com/@pasteleria.hijitos"
                 className={`${tikTokClassName} hover:opacity-80 transition-opacity`}
-                aria-label="TikTok"
             >
                 <TikTokIcon className="w-5 h-5" />
-            </a>
+            </SocialLink>
+
             <a
                 href="https://wa.me/56987421819"
                 target="_blank"
