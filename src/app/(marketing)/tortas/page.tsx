@@ -234,7 +234,7 @@ export default function TortasPage() {
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-3xl">📸</span>
-                <a href="https://instagram.com/pasteleria.hijitos" className="font-medium hover:text-accent transition-colors">@pasteleria.hijitos</a>
+                <a href="https://www.instagram.com/pasteleria.hijitos/" className="font-medium hover:text-accent transition-colors">@pasteleria.hijitos</a>
               </div>
             </div>
 
