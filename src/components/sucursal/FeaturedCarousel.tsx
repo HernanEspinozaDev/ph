@@ -55,7 +55,7 @@ export function FeaturedCarousel({ products }: FeaturedCarouselProps) {
                                 {/* Circular Image Container */}
                                 <div
                                     className={`
-                    w-48 h-48 md:w-56 md:h-56 
+                    w-40 h-40 md:w-56 md:h-56 
                     rounded-full overflow-hidden
                     border-[6px] ${borderColors[index % borderColors.length]}
                     relative mb-4
@@ -69,7 +69,7 @@ export function FeaturedCarousel({ products }: FeaturedCarouselProps) {
                                             alt={product.nombre}
                                             fill
                                             className="object-cover"
-                                            sizes="(max-width: 768px) 200px, 250px"
+                                            sizes="(max-width: 768px) 160px, 250px"
                                         />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground font-bold">
