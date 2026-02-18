@@ -4,6 +4,7 @@ import { getMenu } from '@/app/actions/menu';
 import MenuSection from "@/components/cartaclasica/MenuSection";
 import "@/styles/menu.css";
 import { Product } from '@/types/menu';
+import { SocialLinks } from '@/components/SocialLinks';
 
 export const runtime = 'edge';
 
@@ -56,6 +57,9 @@ export default async function CartaClasicaPage() {
                     <div className="text-center">
                         <h1 className="text-4xl font-bold text-amber-500 mb-2 font-dancing">Pastelería Hijitos</h1>
                         <div className="text-xl text-gray-400 font-light tracking-wide uppercase">Menú</div>
+                        <div className="mt-4">
+                            <SocialLinks className="text-gray-400" />
+                        </div>
                     </div>
                 </header>
 

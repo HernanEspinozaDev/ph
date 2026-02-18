@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { MenuGroup } from '@/types/menu';
+import { SocialLinks } from '@/components/SocialLinks';
 
 interface MenuSidebarProps {
     activeGroup: string;
@@ -11,7 +12,7 @@ interface MenuSidebarProps {
 export function MenuSidebar({ activeGroup, onSelectGroup, groups }: MenuSidebarProps) {
     return (
         <div className="hidden lg:flex flex-col fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-stone-200 z-50">
-            <div className="p-6 flex justify-center border-b border-stone-100">
+            <div className="p-6 flex flex-col items-center justify-center border-b border-stone-100 gap-4">
                 <div className="relative w-32 h-20">
                     <Image
                         src="/logo.webp"
@@ -21,6 +22,7 @@ export function MenuSidebar({ activeGroup, onSelectGroup, groups }: MenuSidebarP
                         priority
                     />
                 </div>
+                <SocialLinks />
             </div>
 
             <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
