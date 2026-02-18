@@ -38,7 +38,7 @@ export function Footer() {
               <a href="https://www.facebook.com/pasteleria.hijitos" aria-label="Facebook" className="transition-opacity hover:opacity-70">
                 <FacebookIcon className="h-10 w-10" />
               </a>
-              <a href="https://www.instagram.com/pasteleria.hijitos/" aria-label="Instagram" className="transition-opacity hover:opacity-70">
+              <a href="https://instagram.com/pasteleria.hijitos/" aria-label="Instagram" className="transition-opacity hover:opacity-70">
                 <InstagramIcon className="h-10 w-10" />
               </a>
             </div>
