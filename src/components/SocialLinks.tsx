@@ -37,7 +37,7 @@ export function SocialLinks({ className = "", tikTokClassName = "text-black" }: 
                 <Facebook className="w-6 h-6" />
             </a>
             <a
-                href="https://www.instagram.com/pasteleria.hijitos/"
+                href="https://www.instagram.com/pasteleria_hijitos/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#E4405F] hover:opacity-80 transition-opacity"
