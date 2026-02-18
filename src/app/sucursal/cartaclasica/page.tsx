@@ -58,7 +58,7 @@ export default async function CartaClasicaPage() {
                         <h1 className="text-4xl font-bold text-amber-500 mb-2 font-dancing">Pastelería Hijitos</h1>
                         <div className="text-xl text-gray-400 font-light tracking-wide uppercase">Menú</div>
                         <div className="mt-4">
-                            <SocialLinks className="text-gray-400" />
+                            <SocialLinks className="text-gray-400" tikTokClassName="text-white" />
                         </div>
                     </div>
                 </header>

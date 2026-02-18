@@ -24,7 +24,7 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
-export function SocialLinks({ className = "" }: { className?: string }) {
+export function SocialLinks({ className = "", tikTokClassName = "text-black" }: { className?: string, tikTokClassName?: string }) {
     return (
         <div className={`flex items-center gap-4 justify-center ${className}`}>
             <a
@@ -49,7 +49,7 @@ export function SocialLinks({ className = "" }: { className?: string }) {
                 href="https://www.tiktok.com/@pasteleria.hijitos"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black hover:opacity-80 transition-opacity"
+                className={`${tikTokClassName} hover:opacity-80 transition-opacity`}
                 aria-label="TikTok"
             >
                 <TikTokIcon className="w-5 h-5" />
