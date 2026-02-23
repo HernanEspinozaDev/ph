@@ -13,6 +13,7 @@ export function HeroSection() {
                     alt="Hamburguesa jugosa estilo fuente de soda"
                     fill
                     priority
+                    sizes="100vw"
                     className="object-cover opacity-60"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
