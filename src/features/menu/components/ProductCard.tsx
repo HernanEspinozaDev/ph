@@ -21,6 +21,7 @@ export function ProductCard({ item, onClick }: ProductCardProps) {
                         src={item.imagen_url}
                         alt={item.nombre}
                         fill
+                        sizes="(max-width: 640px) 112px, 128px"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                 ) : (

@@ -30,6 +30,8 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
                                     src={product.imagen_url}
                                     alt={product.nombre}
                                     fill
+                                    sizes="(max-width: 640px) 95vw, 448px"
+                                    priority
                                     className="object-cover"
                                 />
                             ) : (

@@ -20,6 +20,7 @@ export default function MenuItem({ name, ingredients, price, imageUrl, stock, ge
                         src={imageUrl}
                         alt={name}
                         fill
+                        sizes="80px"
                         className="object-cover"
                     />
                 </div>
