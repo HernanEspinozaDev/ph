@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { SocialLink } from '@/components/SocialLink';
 
 const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props} fill="currentColor" viewBox="0 0 24 24">
@@ -35,12 +36,22 @@ export function Footer() {
           <div className="text-center md:text-right">
             <h4 className="mb-4 text-sm font-light uppercase tracking-wider">Síguenos</h4>
             <div className="flex gap-6 justify-center md:justify-end">
-              <a href="https://www.facebook.com/pasteleria.hijitos" aria-label="Facebook" className="transition-opacity hover:opacity-70">
-                <FacebookIcon className="h-10 w-10" />
-              </a>
-              <a href="https://www.instagram.com/pasteleria.hijitos/" aria-label="Instagram" className="transition-opacity hover:opacity-70">
-                <InstagramIcon className="h-10 w-10" />
-              </a>
+              <SocialLink
+                platform="facebook"
+                webUrl="https://www.facebook.com/pasteleria.hijitos"
+                className="transition-opacity hover:opacity-70"
+              >
+                <FacebookIcon className="h-10 w-10 text-[#1877F2]" />
+              </SocialLink>
+
+              <SocialLink
+                platform="instagram"
+                username="pasteleria.hijitos"
+                webUrl="https://instagram.com/pasteleria.hijitos/"
+                className="transition-opacity hover:opacity-70"
+              >
+                <InstagramIcon className="h-10 w-10 text-[#E4405F]" />
+              </SocialLink>
             </div>
           </div>
         </div>
