@@ -49,6 +49,7 @@ export default function ProductForm({ product, categories }: { product: AdminPro
             formData.append('file', compressedFile);
             formData.append('categoryName', categoryName);
             formData.append('productName', productName);
+            formData.append('oldImageUrl', imageUrl); // Send current image URL for R2 cleanup
 
             const res = await fetch('/api/upload', {
                 method: 'POST',

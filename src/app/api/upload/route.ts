@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getRequestContext } from '@cloudflare/next-on-pages';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 export const runtime = 'edge';
 
@@ -10,7 +10,8 @@ export async function POST(request: NextRequest) {
         const formData = await request.formData();
         const file = formData.get('file') as File;
         const categoryName = formData.get('categoryName') as string;
-        const productName = formData.get('productName') as string; // Receive product name
+        const productName = formData.get('productName') as string;
+        const oldImageUrl = formData.get('oldImageUrl') as string; // URL of previous image to delete
 
         if (!file) {
             console.error("No file in formData");
@@ -37,18 +38,25 @@ export async function POST(request: NextRequest) {
         const rawName = productName || file.name.split('.')[0];
         const safeName = rawName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, '-');
 
-        // Add timestamp to prevent caching issues or overwrites if desired, OR keep clean name
-        // User asked to name it as the product. Let's append a small random string to avoid cache collision if they update image?
-        // Or just keep it clean. Let's keep it clean but maybe add timestamp if it's "producto-sin-nombre"
-        // Actually, cleaner is better for SEO/URL reading. Let's just use safeName.
-        // But if they upload multiple times, browser cache might be an issue. Let's use clean name + timestamp for uniqueness?
-        // User asked "asi se renombra con ese nombre". Let's stick to safeName.
         const extension = 'webp';
 
-        // If we strictly want product name:
-        const key = `carta/${safeCategory}/${safeName}.${extension}`;
+        // Add timestamp to filename for cache-busting (avoids CDN serving stale cached images)
+        const timestamp = Date.now();
+        const key = `carta/${safeCategory}/${safeName}_${timestamp}.${extension}`;
 
         console.log(`Uploading to key: ${key}`);
+
+        // Helper to extract R2 key from a full public URL
+        const extractOldKey = (url: string): string | null => {
+            if (!url) return null;
+            try {
+                const urlObj = new URL(url);
+                // Remove leading slash to get the R2 key
+                return urlObj.pathname.startsWith('/') ? urlObj.pathname.slice(1) : urlObj.pathname;
+            } catch {
+                return null;
+            }
+        };
 
         // Convert File to ArrayBuffer
         const arrayBuffer = await file.arrayBuffer();
@@ -61,6 +69,18 @@ export async function POST(request: NextRequest) {
                     httpMetadata: { contentType: 'image/webp' }
                 });
                 console.log("Upload successful via R2 Binding");
+
+                // Delete old image from R2 after successful upload
+                const oldKey = extractOldKey(oldImageUrl);
+                if (oldKey) {
+                    try {
+                        await bucket.delete(oldKey);
+                        console.log(`Deleted old image from R2: ${oldKey}`);
+                    } catch (delErr: any) {
+                        console.warn(`Failed to delete old image ${oldKey}:`, delErr.message);
+                    }
+                }
+
                 const publicUrl = `${r2Domain}/${key}`;
                 return NextResponse.json({ url: publicUrl });
             } catch (err: any) {
@@ -118,6 +138,21 @@ export async function POST(request: NextRequest) {
             }));
 
             console.log("Upload successful via S3 Client");
+
+            // Delete old image from R2 via S3 after successful upload
+            const oldKey = extractOldKey(oldImageUrl);
+            if (oldKey) {
+                try {
+                    await S3.send(new DeleteObjectCommand({
+                        Bucket: 'pasteleria-assets',
+                        Key: oldKey,
+                    }));
+                    console.log(`Deleted old image via S3: ${oldKey}`);
+                } catch (delErr: any) {
+                    console.warn(`Failed to delete old image ${oldKey}:`, delErr.message);
+                }
+            }
+
             const publicUrl = `${r2Domain}/${key}`;
             return NextResponse.json({ url: publicUrl });
         }
