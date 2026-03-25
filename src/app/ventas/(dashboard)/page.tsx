@@ -18,7 +18,7 @@ export default async function DashboardPage() {
                 <p className="text-gray-500">Panel de Administración de Pastelería Hijitos</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Link href="/ventas/productos" className="group">
                     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:border-blue-400 h-full flex flex-col items-center text-center">
                         <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
@@ -40,6 +40,18 @@ export default async function DashboardPage() {
                         </div>
                         <h2 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-purple-600">Gestionar Categorías</h2>
                         <p className="text-gray-500 text-sm">Crear y ordenar categorías para organizar el menú de productos.</p>
+                    </div>
+                </Link>
+
+                <Link href="/ventas/cartaimprimir" className="group">
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:border-amber-400 h-full flex flex-col items-center text-center">
+                        <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                            </svg>
+                        </div>
+                        <h2 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-amber-600">Carta Lista para Imprimir</h2>
+                        <p className="text-gray-500 text-sm">Previsualiza y envía a imprimir el menú actualizado con el diseño clásico.</p>
                     </div>
                 </Link>
             </div>

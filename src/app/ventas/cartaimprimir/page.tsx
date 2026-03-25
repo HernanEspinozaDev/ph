@@ -4,26 +4,13 @@ import "@/styles/cartaimprimir.css";
 import { Product } from '@/types/menu';
 import Image from 'next/image';
 
-// Categorías definidas para cada página
-const PAGE1_CATEGORIES = [
-    'Combos', 'Pizzas', 'Empanadas', 'Hamburguesas',
-    'Sandwich', 'Completos', 'Papas', 'Desayuno'
-];
-
-const PAGE2_CATEGORIES = [
-    'Postres', 'Helados', 'Bebidas', 'Pastelería'
-];
-
-// Helper to group items by category
-const groupItemsByCategory = (items: Product[], allowedCategories: string[]) => {
+// Helper to group items by category dynamically
+const groupItemsByCategory = (items: Product[]) => {
     const groups: Record<string, any[]> = {};
 
     items.forEach(item => {
         if (item.gestionar_stock === 1 && item.stock <= 0) return;
         const category = item.categoria || 'Otros';
-
-        // Solo incluir si está en las categorías permitidas
-        if (!allowedCategories.includes(category)) return;
 
         if (!groups[category]) groups[category] = [];
 
@@ -36,13 +23,10 @@ const groupItemsByCategory = (items: Product[], allowedCategories: string[]) => 
         });
     });
 
-    // Mantener el orden de las categorías según la lista permitida
-    return allowedCategories
-        .filter(cat => groups[cat]) // Solo incluir si tiene elementos
-        .map(name => ({
-            name,
-            items: groups[name]
-        }));
+    return Object.entries(groups).map(([name, items]) => ({
+        name,
+        items
+    }));
 };
 
 // Componente para las ilustraciones line art (Imágenes generadas de alta calidad)
@@ -73,8 +57,12 @@ const LineArtPage2 = () => {
 export default async function CartaClasicaPage() {
     const menuItems = await getMenu();
 
-    const page1Sections = groupItemsByCategory(menuItems, PAGE1_CATEGORIES);
-    const page2Sections = groupItemsByCategory(menuItems, PAGE2_CATEGORIES);
+    const allSections = groupItemsByCategory(menuItems);
+    
+    // Split sections into half automatically
+    const half = Math.ceil(allSections.length / 2);
+    const page1Sections = allSections.slice(0, half);
+    const page2Sections = allSections.slice(half);
 
     return (
         <div className="min-h-screen bg-neutral-100 text-black flex flex-col items-center">
