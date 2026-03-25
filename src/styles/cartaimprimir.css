@@ -1,0 +1,165 @@
+body {
+  background: white;
+  color: black;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.print-page {
+  /* Aproximado a tamaño Carta horizontal en pantalla para visualización */
+  width: 279.4mm;
+  height: 215.9mm;
+  margin: 5mm auto;
+  padding: 8mm 15mm;
+  /* Mayor padding lateral para centrado */
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  /* Para las ilustraciones que sobresalgan */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ilustraciones decorativas (Line Art) absolutas */
+.line-art {
+  position: absolute;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.line-art-tl {
+  top: 0;
+  left: 0;
+}
+
+.line-art-tr {
+  top: 0;
+  right: 0;
+}
+
+.line-art-bl {
+  bottom: 0;
+  left: 0;
+}
+
+.line-art-br {
+  bottom: 0;
+  right: 0;
+}
+
+.page-content {
+  position: relative;
+  z-index: 10;
+  column-gap: 6mm;
+  flex: 1;
+}
+
+.cols-4 {
+  column-count: 4;
+}
+
+.cols-3 {
+  column-count: 3;
+}
+
+.menu-header {
+  text-align: center;
+  margin-bottom: 2mm;
+  column-span: all;
+  /* Para que el título ocupe todo el ancho antes de las columnas */
+  position: relative;
+  z-index: 10;
+}
+
+.menu-header h1 {
+  font-size: 42pt;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+}
+
+.menu-section {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin-bottom: 4mm;
+}
+
+.menu-section h2 {
+  font-size: 16pt;
+  font-weight: 700;
+  text-align: left;
+  color: black;
+  border-bottom: 2px solid #000;
+  padding-bottom: 1mm;
+  margin-top: 0;
+  margin-bottom: 2mm;
+}
+
+/* Elemento del menú con puntos (Dot Leader) */
+.menu-item {
+  margin-bottom: 2mm;
+  break-inside: avoid;
+}
+
+.menu-item-header {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+}
+
+.menu-item-name {
+  font-size: 10pt;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.menu-item-dots {
+  flex-grow: 1;
+  border-bottom: 1px dotted #999;
+  margin: 0 1mm;
+  position: relative;
+  top: -3px;
+}
+
+.menu-item-price {
+  font-size: 10pt;
+  font-weight: 700;
+}
+
+.menu-item-desc {
+  margin: 0;
+  font-size: 8pt;
+  line-height: 1.1;
+  color: #444;
+  margin-top: 1px;
+}
+
+/* Configuraciones de Impresión */
+@media print {
+  @page {
+    size: letter landscape;
+    margin: 5mm;
+  }
+
+  body {
+    background: transparent;
+  }
+
+  .print-page {
+    width: 279.4mm;
+    height: 215.9mm;
+    margin: 0;
+    /* Margen garantizado exacto: 5mm arriba/abajo, 15mm ambos lados */
+    padding: 2mm 15mm;
+    box-shadow: none;
+    page-break-after: always;
+  }
+
+  /* Evitar salto de página después de la última página */
+  .print-page:last-child {
+    page-break-after: auto;
+  }
+}
