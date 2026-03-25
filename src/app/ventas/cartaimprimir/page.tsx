@@ -6,13 +6,25 @@ import Image from 'next/image';
 
 export const runtime = 'edge';
 
-// Helper to group items by category dynamically
-const groupItemsByCategory = (items: Product[]) => {
+// Categorías definidas para cada página
+const PAGE1_CATEGORIES = [
+    'Combos', 'Pizzas', 'Empanadas', 'Hamburguesas',
+    'Sandwich', 'Completos', 'Papas', 'Desayuno', 'Bebidas'
+];
+
+const PAGE2_CATEGORIES = [
+    'Postres', 'Helados', 'Pastelería'
+];
+
+// Helper to group items by category dynamically respetando el orden
+const groupItemsByCategory = (items: Product[], allowedCategories: string[]) => {
     const groups: Record<string, any[]> = {};
 
     items.forEach(item => {
         if (item.gestionar_stock === 1 && item.stock <= 0) return;
         const category = item.categoria || 'Otros';
+
+        if (!allowedCategories.includes(category)) return;
 
         if (!groups[category]) groups[category] = [];
 
@@ -25,10 +37,12 @@ const groupItemsByCategory = (items: Product[]) => {
         });
     });
 
-    return Object.entries(groups).map(([name, items]) => ({
-        name,
-        items
-    }));
+    return allowedCategories
+        .filter(cat => groups[cat])
+        .map(name => ({
+            name,
+            items: groups[name]
+        }));
 };
 
 // Componente para las ilustraciones line art (Imágenes generadas de alta calidad)
@@ -59,12 +73,8 @@ const LineArtPage2 = () => {
 export default async function CartaClasicaPage() {
     const menuItems = await getMenu();
 
-    const allSections = groupItemsByCategory(menuItems);
-    
-    // Split sections into half automatically
-    const half = Math.ceil(allSections.length / 2);
-    const page1Sections = allSections.slice(0, half);
-    const page2Sections = allSections.slice(half);
+    const page1Sections = groupItemsByCategory(menuItems, PAGE1_CATEGORIES);
+    const page2Sections = groupItemsByCategory(menuItems, PAGE2_CATEGORIES);
 
     return (
         <div className="min-h-screen bg-neutral-100 text-black flex flex-col items-center">
@@ -102,7 +112,7 @@ export default async function CartaClasicaPage() {
                 <header className="menu-header">
                 </header>
 
-                <div className="page-content cols-3">
+                <div className="page-content cols-3" style={{ paddingBottom: '60mm' }}>
                     {page2Sections.length > 0 ? (
                         page2Sections.map((section, index) => (
                             <MenuSection key={index} name={section.name} items={section.items} />
