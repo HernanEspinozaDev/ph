@@ -4,6 +4,8 @@ import "@/styles/cartaimprimir.css";
 import { Product } from '@/types/menu';
 import Image from 'next/image';
 
+export const runtime = 'edge';
+
 // Helper to group items by category dynamically
 const groupItemsByCategory = (items: Product[]) => {
     const groups: Record<string, any[]> = {};
