@@ -57,16 +57,29 @@ const distribute = (items: LayoutItem[], columnShares: number[]) => {
     for (const item of items) {
         const capacity = totalWeight * (columnShares[currentColumn] / totalShares);
         
-        // Push the column boundary if needed
+        let shouldWrap = false;
+        
+        // Push the column boundary if we exceed projected capacity
         if (currentWeight + (item.weight * 0.5) > capacity && currentColumn < columnShares.length - 1) {
-            // Check for orphan header protection
-            if (item.type === 'header') {
-                currentColumn++;
-                currentWeight = 0;
-            } else {
-                currentColumn++;
-                currentWeight = 0;
-            }
+            shouldWrap = true;
+        }
+        
+        // ORPHAN HEADER PROTECTION
+        // 1. Proactively wrap if it's a header and we are too close to the edge of the column
+        // We ensure there's room for at least the header (3) + 1 large item (2)
+        if (item.type === 'header' && currentWeight + item.weight + 2 > capacity && currentColumn < columnShares.length - 1) {
+            shouldWrap = true;
+        }
+        
+        // 2. NEVER wrap if we literally just pushed a header
+        const currColItems = columns[currentColumn];
+        if (currColItems.length > 0 && currColItems[currColItems.length - 1].type === 'header') {
+            shouldWrap = false;
+        }
+
+        if (shouldWrap) {
+            currentColumn++;
+            currentWeight = 0;
         }
         
         currentWeight += item.weight;
@@ -109,8 +122,8 @@ export default async function CartaClasicaPage() {
     // Page 1: Col 2 y 3 tienen un offset por el logo, pesan menos visualmente 
     const page1Cols = distribute(flat1, [1.0, 0.75, 0.75, 1.0]);
     
-    // Page 2: Col 1 tiene el QR, por lo que pesa menos visualmente
-    const page2Cols = distribute(flat2, [0.65, 1.0, 1.0]);
+    // Page 2: Col 1 tiene el QR, por lo que pesa menos visualmente, pero le damos más espacio (0.85) para que quepan todos los Helados
+    const page2Cols = distribute(flat2, [0.85, 1.0, 1.0]);
 
     return (
         <div className="min-h-screen bg-neutral-100 text-black flex flex-col items-center">
@@ -119,15 +132,15 @@ export default async function CartaClasicaPage() {
                 <LineArt />
                 
                 {/* Logo absoluto en el top center */}
-                <div className="absolute top-[8mm] left-1/2 -translate-x-1/2 w-[220px] h-[120px] z-20">
+                <div className="absolute top-[0] left-1/2 -translate-x-1/2 w-[220px] h-[120px] z-20">
                     <Image src="/logo.webp" alt="Logo Pastelería Hijitos" fill className="object-contain" priority />
                 </div>
 
                 <div className="relative z-10 flex gap-x-[6mm] h-full">
                     <RenderColumn items={page1Cols[0]} />
                     {/* Column 2 and 3 bajadas artificialmente para acomodar logo */}
-                    <RenderColumn items={page1Cols[1]} className="pt-[110px]" />
-                    <RenderColumn items={page1Cols[2]} className="pt-[110px]" />
+                    <RenderColumn items={page1Cols[1]} className="pt-[95px]" />
+                    <RenderColumn items={page1Cols[2]} className="pt-[95px]" />
                     <RenderColumn items={page1Cols[3]} />
                 </div>
             </div>
