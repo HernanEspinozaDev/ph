@@ -16,22 +16,26 @@ export default function ProductCard({ producto, basePath }: { producto: EventoPr
         
     const mainImgUrl = imagenes.length > 0 ? imagenes[0].url : '/placeholder.png';
 
-    const handleAddToCart = (e: React.MouseEvent) => {
+    const handleAddToCart = (e: React.MouseEvent, qty: number = minQty) => {
         e.preventDefault(); // Prevent navigating to PDP
         
         addItem({
             producto_id: producto.id,
             nombre: producto.nombre,
             categoria: producto.categoria,
-            cantidad: minQty,
+            cantidad: qty,
             precio_unitario: producto.precio_unitario,
             imagen_url: mainImgUrl,
             cantidad_minima: minQty,
             incremento: step
         });
 
-        alert(`¡${minQty} unidades agregadas al carrito!`);
+        alert(`¡${qty} unidades agregadas al carrito!`);
     };
+
+    const opcionesRapidas = producto.opciones_rapidas 
+        ? producto.opciones_rapidas.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n))
+        : [];
 
     return (
         <Link href={`/productos/${producto.id}?from=${basePath}`} className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden flex flex-col h-full relative cursor-pointer block">
@@ -66,10 +70,25 @@ export default function ProductCard({ producto, basePath }: { producto: EventoPr
                         <p className="text-xs text-gray-400 mt-1">Desde {minQty} u.</p>
                     </div>
 
+                    {/* Quick Options */}
+                    {opcionesRapidas.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-1">
+                            {opcionesRapidas.slice(0, 3).map(opcion => (
+                                <button 
+                                    key={opcion}
+                                    onClick={(e) => handleAddToCart(e, Math.max(minQty, opcion))}
+                                    className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-600 hover:bg-primary hover:text-white hover:border-primary transition-colors"
+                                >
+                                    +{opcion}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
                     {/* Add to Cart Button */}
                     <button 
-                        onClick={handleAddToCart}
-                        className="w-full bg-gray-100 text-gray-800 hover:bg-primary hover:text-white py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200"
+                        onClick={(e) => handleAddToCart(e, minQty)}
+                        className="w-full bg-gray-100 text-gray-800 hover:bg-primary hover:text-white py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200 mt-1"
                     >
                         Agregar
                     </button>

@@ -12,6 +12,9 @@ export default function ProductDetailClient({ producto }: ProductDetailClientPro
     const [mainImageIdx, setMainImageIdx] = useState(0);
     const minQty = producto.cantidad_minima || 1;
     const step = producto.incremento || 1;
+    const opcionesRapidas = producto.opciones_rapidas 
+        ? producto.opciones_rapidas.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n))
+        : [];
     
     const [selectedQty, setSelectedQty] = useState<number>(minQty);
     const addItem = useCotizadorStore(state => state.addItem);
@@ -97,6 +100,28 @@ export default function ProductDetailClient({ producto }: ProductDetailClientPro
                 )}
 
                 <div className="bg-gray-50 p-6 rounded-xl border border-gray-100 mb-8 space-y-6">
+                    {/* Quick Options */}
+                    {opcionesRapidas.length > 0 && (
+                        <div>
+                            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Opciones Rápidas</p>
+                            <div className="flex flex-wrap gap-2">
+                                {opcionesRapidas.map(opcion => (
+                                    <button 
+                                        key={opcion}
+                                        onClick={() => setSelectedQty(Math.max(minQty, opcion))}
+                                        className={`px-4 py-2 text-sm rounded-full font-semibold transition-all duration-300 ${
+                                            selectedQty === opcion 
+                                            ? 'bg-primary text-white shadow-md shadow-primary/20 scale-105' 
+                                            : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 hover:border-gray-300 hover:shadow-sm'
+                                        }`}
+                                    >
+                                        {opcion} u.
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
                     {/* Quantity Selector */}
                     <div>
                         <label className="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-3">
