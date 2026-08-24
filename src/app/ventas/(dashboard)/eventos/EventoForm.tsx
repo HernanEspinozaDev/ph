@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { EventoProducto, createEventoProducto, updateEventoProducto, addEventoImagen, deleteEventoProducto, deleteEventoImagen } from '@/app/actions/eventos-admin';
+import imageCompression from 'browser-image-compression';
 
 export default function EventoForm({ initialData }: { initialData?: EventoProducto }) {
     const router = useRouter();
@@ -56,16 +57,30 @@ export default function EventoForm({ initialData }: { initialData?: EventoProduc
     };
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files || e.target.files.length === 0) return;
+        const file = e.target.files?.[0];
+        if (!file) return;
+        
         setUploadingImage(true);
         
         try {
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1280,
+                useWebWorker: true,
+                fileType: 'image/webp'
+            };
+
+            const compressedFile = await imageCompression(file, options);
+
             const formData = new FormData();
-            formData.append('file', e.target.files[0]);
+            formData.append('file', compressedFile);
             formData.append('basePath', 'eventos');
+            
             const cat = (document.getElementById('categoria') as HTMLSelectElement)?.value || 'varios';
             formData.append('categoryName', cat);
-            const name = (document.getElementById('nombre') as HTMLInputElement)?.value || 'img';
+            
+            const nameInput = document.getElementById('nombre') as HTMLInputElement;
+            const name = nameInput?.value || 'img';
             formData.append('productName', name);
 
             const res = await fetch('/api/upload', {
@@ -77,11 +92,12 @@ export default function EventoForm({ initialData }: { initialData?: EventoProduc
                 const data = await res.json();
                 setImages(prev => [...prev, { url: data.url, isMain: prev.length === 0 }]);
             } else {
-                alert("Error subiendo imagen");
+                const errorData = await res.json().catch(() => ({}));
+                alert(`Error subiendo imagen: ${errorData.details || errorData.error || 'Desconocido'}`);
             }
-        } catch (error) {
-            console.error(error);
-            alert("Error subiendo imagen");
+        } catch (error: any) {
+            console.error('Error uploading image:', error);
+            alert(`Error al subir la imagen: ${error.message}`);
         } finally {
             setUploadingImage(false);
         }
