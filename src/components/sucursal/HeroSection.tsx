@@ -10,7 +10,7 @@ export function HeroSection() {
             <div className="absolute inset-0 z-0">
                 <Image
                     src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=1920&auto=format&fit=crop"
-                    alt="Hamburguesa jugosa estilo fuente de soda"
+                    alt="Hamburguesa jugosa estilo comida rápida"
                     fill
                     priority
                     className="object-cover opacity-60"

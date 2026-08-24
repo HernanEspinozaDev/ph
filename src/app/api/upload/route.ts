@@ -40,9 +40,11 @@ export async function POST(request: NextRequest) {
 
         const extension = 'webp';
 
+        const basePath = formData.get('basePath') as string || 'carta';
+
         // Add timestamp to filename for cache-busting (avoids CDN serving stale cached images)
         const timestamp = Date.now();
-        const key = `carta/${safeCategory}/${safeName}_${timestamp}.${extension}`;
+        const key = `${basePath}/${safeCategory}/${safeName}_${timestamp}.${extension}`;
 
         console.log(`Uploading to key: ${key}`);
 

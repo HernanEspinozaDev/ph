@@ -49,55 +49,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/sucursal',
-        permanent: false,
-      },
-      {
-        source: '/about',
-        destination: '/sucursal',
-        permanent: false,
-      },
-      {
-        source: '/team',
-        destination: '/sucursal',
-        permanent: false,
-      },
-      {
-        source: '/locations',
-        destination: '/sucursal',
-        permanent: false,
-      },
-      {
-        source: '/contact',
-        destination: '/sucursal',
-        permanent: false,
-      },
-      {
-        source: '/dulces',
-        destination: '/sucursal',
-        permanent: false,
-      },
-      {
-        source: '/salados',
-        destination: '/sucursal',
-        permanent: false,
-      },
-      {
-        source: '/tortas',
-        destination: '/sucursal',
-        permanent: false,
-      },
-      {
-        source: '/order-online',
-        destination: '/sucursal',
-        permanent: false,
-      },
-    ];
-  },
 };
 
 export default async function config() {

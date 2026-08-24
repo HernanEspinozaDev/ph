@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { Header } from '@/features/layout/Header';
 import { Footer } from '@/features/layout/Footer';
 
