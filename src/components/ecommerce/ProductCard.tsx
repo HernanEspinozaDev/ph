@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { EventoProducto } from '@/app/actions/eventos-admin';
 import { useCotizadorStore } from '@/hooks/useCotizadorStore';
@@ -7,6 +8,8 @@ import { useCotizadorStore } from '@/hooks/useCotizadorStore';
 export default function ProductCard({ producto, basePath }: { producto: EventoProducto, basePath: string }) {
     const minQty = producto.cantidad_minima || 1;
     const step = producto.incremento || 1;
+    
+    const [selectedQty, setSelectedQty] = useState<number>(minQty);
     
     const addItem = useCotizadorStore(state => state.addItem);
 
@@ -16,21 +19,21 @@ export default function ProductCard({ producto, basePath }: { producto: EventoPr
         
     const mainImgUrl = imagenes.length > 0 ? imagenes[0].url : '/placeholder.png';
 
-    const handleAddToCart = (e: React.MouseEvent, qty: number = minQty) => {
+    const handleAddToCart = (e: React.MouseEvent) => {
         e.preventDefault(); // Prevent navigating to PDP
         
         addItem({
             producto_id: producto.id,
             nombre: producto.nombre,
             categoria: producto.categoria,
-            cantidad: qty,
+            cantidad: selectedQty,
             precio_unitario: producto.precio_unitario,
             imagen_url: mainImgUrl,
             cantidad_minima: minQty,
             incremento: step
         });
 
-        alert(`¡${qty} unidades agregadas al carrito!`);
+        alert(`¡${selectedQty} unidades agregadas al carrito!`);
     };
 
     const opcionesRapidas = producto.opciones_rapidas 
@@ -61,25 +64,32 @@ export default function ProductCard({ producto, basePath }: { producto: EventoPr
                 </p>
                 
                 <div className="mt-auto flex flex-col gap-3">
-                    {/* Price and Min Qty */}
-                    <div>
-                        <div className="flex items-end gap-1">
-                            <span className="text-xl font-bold text-gray-900">${producto.precio_unitario.toLocaleString('es-CL')}</span>
-                            <span className="text-xs text-gray-500 mb-1 font-medium">c/u</span>
+                    {/* Price and Quantity */}
+                    <div className="flex flex-col">
+                        <div className="flex items-baseline justify-between mb-1">
+                            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Subtotal ({selectedQty} u.)</span>
+                            <span className="text-xl font-bold text-primary">${(producto.precio_unitario * selectedQty).toLocaleString('es-CL')}</span>
                         </div>
-                        <p className="text-xs text-gray-400 mt-1">Desde {minQty} u.</p>
+                        <p className="text-xs text-gray-400">Precio unitario: ${producto.precio_unitario.toLocaleString('es-CL')}</p>
                     </div>
 
                     {/* Quick Options */}
                     {opcionesRapidas.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-1">
-                            {opcionesRapidas.slice(0, 3).map(opcion => (
+                            {opcionesRapidas.slice(0, 4).map(opcion => (
                                 <button 
                                     key={opcion}
-                                    onClick={(e) => handleAddToCart(e, Math.max(minQty, opcion))}
-                                    className="px-2 py-1 text-xs rounded border border-gray-200 text-gray-600 hover:bg-primary hover:text-white hover:border-primary transition-colors"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setSelectedQty(Math.max(minQty, opcion));
+                                    }}
+                                    className={`px-3 py-1 text-xs rounded-full border transition-all duration-300 font-semibold ${
+                                        selectedQty === Math.max(minQty, opcion)
+                                        ? 'bg-primary text-white border-primary shadow-sm'
+                                        : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                                    }`}
                                 >
-                                    +{opcion}
+                                    {opcion} u.
                                 </button>
                             ))}
                         </div>
@@ -87,10 +97,10 @@ export default function ProductCard({ producto, basePath }: { producto: EventoPr
 
                     {/* Add to Cart Button */}
                     <button 
-                        onClick={(e) => handleAddToCart(e, minQty)}
-                        className="w-full bg-gray-100 text-gray-800 hover:bg-primary hover:text-white py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200 mt-1"
+                        onClick={handleAddToCart}
+                        className="w-full bg-gray-900 text-white hover:bg-primary py-2.5 rounded-lg font-bold text-sm transition-colors duration-200 mt-2 shadow-md hover:shadow-lg"
                     >
-                        Agregar
+                        Agregar al carrito
                     </button>
                 </div>
             </div>
