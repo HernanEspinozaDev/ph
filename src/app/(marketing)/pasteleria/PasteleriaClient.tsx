@@ -22,7 +22,11 @@ export default function PasteleriaClient({ products }: { products: Product[] }) 
         <div className="w-full text-slate-800 font-sans">
             
             <div className="max-w-4xl mx-auto">
-                <MenuSearch value={searchQuery} onChange={setSearchQuery} />
+                <MenuSearch 
+                    value={searchQuery} 
+                    onChange={setSearchQuery} 
+                    placeholder="Buscar en la pastelería (ej. alfajor, kuchen, pie)..." 
+                />
             </div>
 
             <div className="py-8 space-y-12 max-w-5xl mx-auto">

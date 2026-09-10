@@ -1,6 +1,8 @@
 import { getMenu } from '@/app/actions/menu';
 import PasteleriaClient from './PasteleriaClient';
 
+import Breadcrumb from '@/components/ecommerce/Breadcrumb';
+
 export const runtime = 'edge';
 
 export default async function PasteleriaPage() {
@@ -12,6 +14,11 @@ export default async function PasteleriaPage() {
     return (
         <main className="min-h-screen bg-[#FDFBF7] py-12">
             <div className="container mx-auto px-6 max-w-5xl">
+                <Breadcrumb items={[
+                    { label: 'Inicio', href: '/' },
+                    { label: 'Pastelería' }
+                ]} />
+
                 <div className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6">Nuestros Pasteles</h1>
                     <p className="text-lg text-gray-600 font-light max-w-2xl mx-auto">

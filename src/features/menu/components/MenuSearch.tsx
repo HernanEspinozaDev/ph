@@ -6,9 +6,10 @@ import { cn } from '@/lib/utils';
 interface MenuSearchProps {
     value: string;
     onChange: (val: string) => void;
+    placeholder?: string;
 }
 
-export function MenuSearch({ value, onChange }: MenuSearchProps) {
+export function MenuSearch({ value, onChange, placeholder }: MenuSearchProps) {
     const scrollDirection = useScrollDirection();
     const isHidden = scrollDirection === 'down';
 
@@ -21,7 +22,7 @@ export function MenuSearch({ value, onChange }: MenuSearchProps) {
             <div className="relative max-w-2xl mx-auto lg:mx-0">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
                 <Input
-                    placeholder="Buscar en la carta (ej. Churrasco Italiano)..."
+                    placeholder={placeholder || "Buscar en la carta (ej. Churrasco Italiano)..."}
                     className="pl-10 bg-white border-stone-200 rounded-lg shadow-sm focus:border-amber-500 focus:ring-amber-500"
                     value={value}
                     onChange={(e) => onChange(e.target.value)}

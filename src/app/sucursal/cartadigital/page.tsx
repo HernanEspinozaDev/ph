@@ -5,7 +5,8 @@ import { MenuGroup } from '@/types/menu';
 export const runtime = 'edge';
 
 export default async function MenuPage() {
-    const products = await getMenu();
+    let products = await getMenu();
+    products = products.filter(p => p.categoria?.toLowerCase() !== 'pastelería' && p.categoria?.toLowerCase() !== 'pasteleria');
 
     // Dynamically extract categories from products
     const uniqueCategories = Array.from(new Set(products.map(p => p.categoria))).filter(Boolean);

@@ -39,7 +39,8 @@ const groupItemsByCategory = (items: Product[]) => {
 };
 
 export default async function CartaClasicaPage() {
-    const menuItems = await getMenu();
+    let menuItems = await getMenu();
+    menuItems = menuItems.filter(p => p.categoria?.toLowerCase() !== 'pastelería' && p.categoria?.toLowerCase() !== 'pasteleria');
     const sections = groupItemsByCategory(menuItems);
 
     return (

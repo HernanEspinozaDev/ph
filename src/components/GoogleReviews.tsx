@@ -39,7 +39,7 @@ export async function GoogleReviews() {
 
   try {
     const response = await fetch(
-      `https://places.googleapis.com/v1/places/${placeId}?languageCode=es&reviewsSort=NEWEST`,
+      `https://places.googleapis.com/v1/places/${placeId}?languageCode=es`,
       {
         headers: {
           'X-Goog-Api-Key': apiKey,
@@ -69,7 +69,14 @@ export async function GoogleReviews() {
 
     // Filtramos reseñas vacías o muy cortas para mantener un buen diseño
     // Tomamos todas las que nos da Google (hasta 5 por defecto en este endpoint)
-    const validReviews = reviews.filter((r) => r.text?.text && r.text.text.length > 10);
+    let validReviews = reviews.filter((r) => r.text?.text && r.text.text.length > 10);
+    
+    // Ordenar las reseñas obtenidas por fecha más reciente
+    validReviews = validReviews.sort((a, b) => {
+      const dateA = new Date(a.publishTime).getTime();
+      const dateB = new Date(b.publishTime).getTime();
+      return dateB - dateA;
+    });
 
     if (validReviews.length === 0) return null;
 

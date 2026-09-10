@@ -54,3 +54,4 @@ migrations/
 
 # Local helper scripts
 fix*.js
+/scratch/
