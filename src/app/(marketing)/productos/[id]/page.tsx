@@ -28,24 +28,15 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
         notFound();
     }
 
-    // Determine return path and label for breadcrumbs based on searchParams or category
-    let parentLabel = 'Catálogo';
-    let parentHref = '/';
-
-    if (searchParams.from === '/dulces' || producto.categoria === 'dulce') {
-        parentLabel = 'Dulces';
-        parentHref = '/dulces';
-    } else if (searchParams.from === '/salados' || producto.categoria === 'salado') {
-        parentLabel = 'Salados';
-        parentHref = '/salados';
-    }
+    // No longer need to differentiate between dulces and salados
+    let parentLabel = 'Coctelería';
+    let parentHref = '/cocteleria';
 
     return (
         <main className="min-h-screen bg-gray-50 py-12">
             <div className="container mx-auto px-6 max-w-6xl">
                 <Breadcrumb items={[
                     { label: 'Inicio', href: '/' },
-                    { label: 'Coctelería', href: '#' },
                     { label: parentLabel, href: parentHref },
                     { label: producto.nombre }
                 ]} />

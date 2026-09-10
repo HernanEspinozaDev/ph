@@ -9,14 +9,8 @@ export const navLinks = [
         ],
     },
     { label: 'Menú', href: '/sucursal' },
-    // { label: 'Tortas', href: '/tortas' },
-    {
-        label: 'Eventos y Catering',
-        dropdown: [
-            { label: 'Dulces', href: '/dulces' },
-            { label: 'Salados', href: '/salados' },
-        ],
-    },
+    { label: 'Pastelería', href: '/pasteleria' },
+    { label: 'Coctelería', href: '/cocteleria' },
 
 ];
 

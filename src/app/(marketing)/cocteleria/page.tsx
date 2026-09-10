@@ -5,10 +5,10 @@ import Breadcrumb from '@/components/ecommerce/Breadcrumb';
 
 export const runtime = 'edge';
 
-export default async function SaladosPage() {
+export default async function CocteleriaPage() {
     const todos = await getEventoProductos();
-    // Filter active and category salado
-    const salados = todos.filter(p => p.activo === 1 && p.categoria === 'salado');
+    // Filter active products only
+    const cocteleria = todos.filter(p => p.activo === 1);
 
     return (
         <main className="min-h-screen bg-gray-50 py-12">
@@ -16,19 +16,18 @@ export default async function SaladosPage() {
                 
                 <Breadcrumb items={[
                     { label: 'Inicio', href: '/' },
-                    { label: 'Coctelería', href: '#' },
-                    { label: 'Salados' }
+                    { label: 'Coctelería' }
                 ]} />
 
                 <div className="text-center max-w-2xl mx-auto mb-12">
-                    <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6">Catering Salado</h1>
+                    <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6">Coctelería y Catering</h1>
                     <p className="text-lg text-gray-600 font-light">
-                        Descubre nuestra exquisita variedad de tapaditos, empanaditas y bocados salados. 
+                        Descubre nuestra exquisita variedad de opciones dulces y saladas. 
                         Ideales para reuniones de empresa, cumpleaños o cualquier evento especial.
                     </p>
                 </div>
 
-                <CatalogClient productos={salados} basePath="/salados" />
+                <CatalogClient productos={cocteleria} basePath="/productos" />
             </div>
             
             <CotizadorFloatingButton />

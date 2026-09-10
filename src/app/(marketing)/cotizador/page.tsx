@@ -258,8 +258,7 @@ export default function CotizadorPage() {
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">Cotizador de Eventos</h1>
                 <p className="text-gray-500 mb-8">Tu carrito de cotización está vacío.</p>
                 <div className="flex gap-4">
-                    <Link href="/salados" className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Ver Salados</Link>
-                    <Link href="/dulces" className="px-6 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700 transition">Ver Dulces</Link>
+                    <Link href="/cocteleria" className="px-6 py-2 bg-pink-600 text-white rounded-md hover:bg-pink-700 transition">Ver Coctelería</Link>
                 </div>
             </div>
         );
@@ -425,7 +424,7 @@ export default function CotizadorPage() {
                 </div>
 
                 <div className="flex justify-end gap-4">
-                    <Link href="/salados" className="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition font-medium">Seguir Cotizando</Link>
+                    <Link href="/cocteleria" className="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition font-medium">Seguir Cotizando</Link>
                     <button 
                         type="submit"
                         disabled={isGenerating}

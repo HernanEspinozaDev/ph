@@ -13,6 +13,7 @@ interface CatalogClientProps {
 export default function CatalogClient({ productos, basePath }: CatalogClientProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortBy, setSortBy] = useState('name-asc');
+    const [categoria, setCategoria] = useState('todas');
     
     const maxPrice = productos.length > 0 ? Math.max(...productos.map(p => p.precio_unitario)) : 10000;
     const [priceRange, setPriceRange] = useState({ min: 0, max: maxPrice });
@@ -20,6 +21,7 @@ export default function CatalogClient({ productos, basePath }: CatalogClientProp
     const handleReset = () => {
         setSearchQuery('');
         setSortBy('name-asc');
+        setCategoria('todas');
         setPriceRange({ min: 0, max: maxPrice });
     };
 
@@ -35,6 +37,11 @@ export default function CatalogClient({ productos, basePath }: CatalogClientProp
             );
         }
 
+        // Category Filter
+        if (categoria !== 'todas') {
+            result = result.filter(p => p.categoria === categoria);
+        }
+
         // Price Filter
         result = result.filter(p => p.precio_unitario >= priceRange.min && p.precio_unitario <= priceRange.max);
 
@@ -48,13 +55,15 @@ export default function CatalogClient({ productos, basePath }: CatalogClientProp
         });
 
         return result;
-    }, [productos, searchQuery, priceRange, sortBy]);
+    }, [productos, searchQuery, priceRange, sortBy, categoria]);
 
     return (
         <div className="flex flex-col lg:flex-row gap-8">
             <ProductFilters 
                 priceRange={priceRange} 
                 onPriceChange={setPriceRange} 
+                categoria={categoria}
+                onCategoriaChange={setCategoria}
                 maxAvailablePrice={maxPrice} 
                 onReset={handleReset} 
             />

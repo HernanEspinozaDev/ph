@@ -39,7 +39,7 @@ export async function GoogleReviews() {
 
   try {
     const response = await fetch(
-      `https://places.googleapis.com/v1/places/${placeId}?languageCode=es`,
+      `https://places.googleapis.com/v1/places/${placeId}?languageCode=es&reviewsSort=NEWEST`,
       {
         headers: {
           'X-Goog-Api-Key': apiKey,
