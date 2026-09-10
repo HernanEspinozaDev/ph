@@ -16,16 +16,25 @@ interface GoogleReviewNew {
   publishTime: string;
 }
 
-interface PlaceDetailsNewResponse {
-  name: string;
-  id: string;
-  rating?: number;
-  userRatingCount?: number;
-  reviews?: GoogleReviewNew[];
-  error?: {
-    message: string;
-    status: string;
+interface LegacyReview {
+  author_name: string;
+  author_url: string;
+  profile_photo_url: string;
+  rating: number;
+  relative_time_description: string;
+  text: string;
+  time: number;
+}
+
+interface LegacyPlaceDetailsResponse {
+  result?: {
+    name: string;
+    rating?: number;
+    user_ratings_total?: number;
+    reviews?: LegacyReview[];
   };
+  status: string;
+  error_message?: string;
 }
 
 export async function GoogleReviews() {
@@ -38,47 +47,53 @@ export async function GoogleReviews() {
   }
 
   try {
+    // Usamos la API antigua de Places (Place Details) que sí soporta reviews_sort=newest
     const response = await fetch(
-      `https://places.googleapis.com/v1/places/${placeId}?languageCode=es`,
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&reviews_sort=newest&fields=name,reviews,rating,user_ratings_total&key=${apiKey}&language=es`,
       {
         headers: {
-          'X-Goog-Api-Key': apiKey,
-          'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
           'Referer': 'http://localhost:9002',
         },
-        cache: 'no-store' // Evitar caché en desarrollo
+        cache: 'no-store'
       }
     );
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
-      console.error(`HTTP error! status: ${response.status}`, errorData);
+      console.error(`HTTP error! status: ${response.status}`);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = (await response.json()) as PlaceDetailsNewResponse;
+    const data = (await response.json()) as LegacyPlaceDetailsResponse;
 
-    if (data.error) {
-      console.error("Error fetching Google Reviews:", data.error.status, data.error.message);
+    if (data.status !== 'OK' || !data.result) {
+      console.error("Error fetching Google Reviews:", data.status, data.error_message);
       return null;
     }
 
-    const { reviews, rating, userRatingCount } = data;
+    const { reviews, rating, user_ratings_total: userRatingCount } = data.result;
 
     if (!reviews || reviews.length === 0) return null;
 
-    // Filtramos reseñas vacías o muy cortas para mantener un buen diseño
-    // Tomamos todas las que nos da Google (hasta 5 por defecto en este endpoint)
-    let validReviews = reviews.filter((r) => r.text?.text && r.text.text.length > 10);
-    
-    // Ordenar las reseñas obtenidas por fecha más reciente
-    validReviews = validReviews.sort((a, b) => {
-      const dateA = new Date(a.publishTime).getTime();
-      const dateB = new Date(b.publishTime).getTime();
-      return dateB - dateA;
-    });
+    // Filtramos reseñas vacías
+    let validLegacyReviews = reviews.filter((r) => r.text && r.text.length > 10);
 
-    if (validReviews.length === 0) return null;
+    if (validLegacyReviews.length === 0) return null;
+
+    // Mapeamos al formato que espera nuestro carrusel (el formato de la API nueva)
+    const validReviews: GoogleReviewNew[] = validLegacyReviews.map(r => ({
+      authorAttribution: {
+        displayName: r.author_name,
+        uri: r.author_url,
+        photoUri: r.profile_photo_url,
+      },
+      rating: r.rating,
+      relativePublishTimeDescription: r.relative_time_description,
+      text: {
+        text: r.text,
+        languageCode: 'es',
+      },
+      publishTime: new Date(r.time * 1000).toISOString()
+    }));
 
     return (
       <section className="py-24 bg-gray-50 border-y border-gray-100 overflow-hidden">
