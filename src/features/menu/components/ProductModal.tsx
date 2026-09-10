@@ -13,9 +13,12 @@ interface ProductModalProps {
     product: Product | null;
     isOpen: boolean;
     onClose: () => void;
+    theme?: 'default' | 'pasteleria';
 }
 
-export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
+export function ProductModal({ product, isOpen, onClose, theme = 'default' }: ProductModalProps) {
+    const isPasteleria = theme === 'pasteleria';
+
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
             <DialogContent className="sm:max-w-md w-[95vw] p-0 overflow-hidden bg-white text-stone-800 [&>button]:hidden">
@@ -52,7 +55,12 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
 
                             <div className="absolute bottom-4 left-6">
                                 <h2 className="text-2xl font-bold text-white shadow-black/50 drop-shadow-md">{product.nombre}</h2>
-                                <p className="font-bold text-amber-400 text-xl drop-shadow-md">{formatPrice(product.precio)}</p>
+                                <p className={cn(
+                                    "font-bold text-xl drop-shadow-md",
+                                    isPasteleria ? "text-primary" : "text-amber-400"
+                                )}>
+                                    {formatPrice(product.precio)}
+                                </p>
                             </div>
                         </div>
 
@@ -91,9 +99,12 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
                                 </div>
                             </div>
 
-                            <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold h-12 rounded-lg text-lg shadow-lg shadow-amber-200 mt-2">
-                                ¡Lo quiero!
-                            </Button>
+                            {/* Hide button in pasteleria theme */}
+                            {!isPasteleria && (
+                                <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold h-12 rounded-lg text-lg shadow-lg shadow-amber-200 mt-2">
+                                    ¡Lo quiero!
+                                </Button>
+                            )}
                         </div>
                     </>
                 )}

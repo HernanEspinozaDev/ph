@@ -6,13 +6,19 @@ import { cn } from '@/lib/utils';
 interface ProductCardProps {
     item: Product;
     onClick: (item: Product) => void;
+    theme?: 'default' | 'pasteleria';
 }
 
-export function ProductCard({ item, onClick }: ProductCardProps) {
+export function ProductCard({ item, onClick, theme = 'default' }: ProductCardProps) {
+    const isPasteleria = theme === 'pasteleria';
+
     return (
         <div
             onClick={() => onClick(item)}
-            className="bg-white rounded-xl p-3 shadow-sm hover:shadow-md border border-stone-100 flex gap-4 cursor-pointer transition-all hover:border-amber-300 group h-full text-left"
+            className={cn(
+                "bg-white rounded-xl p-3 shadow-sm hover:shadow-md border border-stone-100 flex gap-4 cursor-pointer transition-all group h-full text-left",
+                isPasteleria ? "hover:border-primary" : "hover:border-amber-300"
+            )}
         >
             {/* Image Left */}
             <div className="relative w-28 h-28 sm:w-32 sm:h-32 flex-shrink-0 rounded-lg overflow-hidden bg-stone-100">
@@ -41,10 +47,16 @@ export function ProductCard({ item, onClick }: ProductCardProps) {
             <div className="flex-1 flex flex-col justify-between py-1">
                 <div>
                     <div className="flex justify-between items-start gap-2">
-                        <h3 className="font-bold text-stone-800 line-clamp-2 leading-tight group-hover:text-amber-600 transition-colors">
+                        <h3 className={cn(
+                            "font-bold text-stone-800 line-clamp-2 leading-tight transition-colors",
+                            isPasteleria ? "group-hover:text-primary" : "group-hover:text-amber-600"
+                        )}>
                             {item.nombre}
                         </h3>
-                        <span className="font-bold text-amber-600 text-lg whitespace-nowrap">
+                        <span className={cn(
+                            "font-bold text-lg whitespace-nowrap",
+                            isPasteleria ? "text-primary" : "text-amber-600"
+                        )}>
                             ${item.precio.toLocaleString('es-CL')}
                         </span>
                     </div>

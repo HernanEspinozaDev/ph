@@ -37,6 +37,7 @@ export default function PasteleriaClient({ products }: { products: Product[] }) 
                                 key={item.id}
                                 item={item}
                                 onClick={setSelectedProduct}
+                                theme="pasteleria"
                             />
                         ))}
                     </div>
@@ -53,6 +54,7 @@ export default function PasteleriaClient({ products }: { products: Product[] }) 
                 product={selectedProduct}
                 isOpen={!!selectedProduct}
                 onClose={() => setSelectedProduct(null)}
+                theme="pasteleria"
             />
         </div>
     );
