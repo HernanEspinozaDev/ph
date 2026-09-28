@@ -57,7 +57,10 @@ export async function POST(request: NextRequest) {
 
     const vars = env as unknown as Record<string, unknown>;
     const getEnvValue = (name: string) => {
-      const value = process.env[name] ?? vars[name];
+      // Algunos secretos de Pages quedaron creados con espacios/tabuladores
+      // al final del nombre. Busca también por nombre normalizado.
+      const envKey = Object.keys(vars).find((key) => key.trim() === name);
+      const value = process.env[name] ?? vars[name] ?? (envKey ? vars[envKey] : undefined);
       return typeof value === 'string' ? value.trim() || undefined : undefined;
     };
     const accountId = getEnvValue('R2_ACCOUNT_ID');
