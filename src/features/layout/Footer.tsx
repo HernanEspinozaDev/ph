@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { SocialLink } from '@/components/SocialLink';
+import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
 
 const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props} fill="currentColor" viewBox="0 0 24 24">
@@ -18,45 +17,78 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export function Footer() {
   return (
-    <footer className="bg-primary px-4 py-16 text-primary-foreground">
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-start">
-            <Link href="/">
+    <footer className="relative overflow-hidden bg-[#30263a] px-5 pb-6 pt-14 text-white sm:px-8 sm:pt-16">
+      <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full bg-fuchsia-300/10 blur-3xl" />
+      <div className="container relative mx-auto max-w-7xl">
+        <div className="grid gap-12 pb-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.1fr_1fr] lg:gap-10">
+          <div>
+            <Link href="/" className="inline-flex rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
               <Image
                 src="/logo.webp"
                 alt="Pastelería Hijitos Logo"
-                width={200}
-                height={45}
-                className="h-32 w-auto object-contain"
+                width={180}
+                height={72}
+                className="h-20 w-auto object-contain object-left"
                 style={{ filter: 'brightness(0) invert(1)' }}
               />
             </Link>
+            <p className="mt-4 max-w-xs text-sm leading-6 text-white/70">
+              Pastelería familiar en Cartagena. Preparaciones hechas con cariño para compartir en tus momentos especiales.
+            </p>
           </div>
-          <div className="text-center md:text-right">
-            <h4 className="mb-4 text-sm font-light uppercase tracking-wider">Síguenos</h4>
-            <div className="flex gap-6 justify-center md:justify-end">
+
+          <nav aria-label="Explora el sitio">
+            <h2 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-white/55">Explora</h2>
+            <ul className="space-y-3 text-sm text-white/80">
+              <li><Link className="transition-colors hover:text-white" href="/pasteleria">Pastelería</Link></li>
+              <li><Link className="transition-colors hover:text-white" href="/cocteleria">Coctelería y catering</Link></li>
+              <li><Link className="transition-colors hover:text-white" href="/tortas">Tortas</Link></li>
+              <li><Link className="transition-colors hover:text-white" href="/locations">Ubicaciones</Link></li>
+              <li><Link className="transition-colors hover:text-white" href="/contact">Contacto</Link></li>
+            </ul>
+          </nav>
+
+          <div>
+            <h2 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-white/55">Visítanos</h2>
+            <ul className="space-y-4 text-sm text-white/80">
+              <li className="flex items-start gap-3"><MapPin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-fuchsia-200" /><span>Mariano Casanova 336, local 02<br />Cartagena, Valparaíso</span></li>
+              <li><a className="flex items-center gap-3 transition-colors hover:text-white" href="tel:+56987421819"><Phone aria-hidden="true" className="h-4 w-4 shrink-0 text-fuchsia-200" />+56 9 8742 1819</a></li>
+              <li><a className="flex items-center gap-3 break-all transition-colors hover:text-white" href="mailto:pasteleriahijitos@gmail.com"><Mail aria-hidden="true" className="h-4 w-4 shrink-0 text-fuchsia-200" />pasteleriahijitos@gmail.com</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-white/55">Síguenos</h2>
+            <div className="flex gap-3">
               <SocialLink
                 platform="facebook"
                 webUrl="https://www.facebook.com/pasteleria.hijitos"
-                className="transition-opacity hover:opacity-70"
+                className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/5 transition-colors hover:border-white/40 hover:bg-white/10"
               >
-                <FacebookIcon className="h-10 w-10 text-[#1877F2]" />
+                <FacebookIcon className="h-5 w-5 text-white" />
               </SocialLink>
 
               <SocialLink
                 platform="instagram"
                 username="pasteleria.hijitos"
                 webUrl="https://instagram.com/pasteleria.hijitos/"
-                className="transition-opacity hover:opacity-70"
+                className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/5 transition-colors hover:border-white/40 hover:bg-white/10"
               >
-                <InstagramIcon className="h-10 w-10 text-[#E4405F]" />
+                <InstagramIcon className="h-5 w-5 text-white" />
               </SocialLink>
             </div>
+            <Link href="/contact" className="mt-6 inline-flex items-center gap-2 text-sm text-fuchsia-100 transition-colors hover:text-white">
+              Hablemos de tu evento <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+            </Link>
           </div>
         </div>
-        <div className="border-t border-primary-foreground/20 pt-8 text-center text-sm font-light">
-          <p>© {new Date().getFullYear()} Pastelería Hijitos.</p>
+
+        <div className="flex flex-col gap-4 border-t border-white/15 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Pastelería Hijitos · Cartagena, Chile</p>
+          <nav aria-label="Información legal" className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link className="transition-colors hover:text-white" href="/politica-de-privacidad">Política de privacidad</Link>
+            <Link className="transition-colors hover:text-white" href="/condiciones-de-servicio">Términos y condiciones</Link>
+          </nav>
         </div>
       </div>
     </footer>

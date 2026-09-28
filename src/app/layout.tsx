@@ -3,8 +3,20 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Pastelería Hijitos',
-  description: 'Una pasteleria familiar.',
+  metadataBase: new URL('https://pasteleriahijitos.cl'),
+  title: {
+    default: 'Pastelería Hijitos | Pastelería en Cartagena',
+    template: '%s | Pastelería Hijitos',
+  },
+  description: 'Pastelería familiar en Cartagena, Valparaíso. Conoce nuestras tortas, coctelería para eventos y preparaciones para compartir.',
+  openGraph: {
+    type: 'website',
+    locale: 'es_CL',
+    siteName: 'Pastelería Hijitos',
+    title: 'Pastelería Hijitos | Cartagena, Chile',
+    description: 'Pastelería familiar, tortas y coctelería para eventos en Cartagena, Valparaíso.',
+    url: 'https://pasteleriahijitos.cl/',
+  },
 };
 
 export default function RootLayout({

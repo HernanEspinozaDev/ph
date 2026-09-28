@@ -371,11 +371,12 @@ export default function CotizadorPage() {
                 </div>
 
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Datos del Cliente (Opcional)</h3>
+                    <h3 className="text-lg font-bold text-gray-900 mb-4 border-b pb-2">Datos del cliente para la cotización</h3>
                     
                     <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-6">
                         <p className="text-sm text-yellow-800 font-medium">
-                            <span className="font-bold">Aviso de Privacidad:</span> En cumplimiento con la Ley de Protección de Datos Personales de Chile, los datos ingresados en este formulario <span className="font-bold underline">NO serán guardados en nuestra base de datos</span>. Solo se utilizarán para imprimir tu archivo PDF de cotización, el cual estará disponible por un máximo de 7 días.
+                            <span className="font-bold">Aviso de privacidad:</span> El nombre o razón social, RUT, teléfono, dirección y ciudad que ingreses aparecerán en el PDF. Al generar la cotización, el PDF se sube a Cloudflare R2 mediante un enlace público temporal y se elimina automáticamente a los 7 días. Guardamos en Cloudflare D1 el folio, enlace, total y productos de la cotización. Si eliges abrir WhatsApp, el mensaje incluirá algunos datos y el enlace; tú confirmas si deseas enviarlo. Revisa nuestra{' '}
+                            <Link href="/politica-de-privacidad" className="font-bold underline underline-offset-2">Política de privacidad</Link>.
                         </p>
                     </div>
 

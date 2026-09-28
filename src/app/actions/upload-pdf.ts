@@ -1,40 +1,30 @@
 'use server';
 
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getRequestContext } from '@cloudflare/next-on-pages';
 
 export async function uploadPdf(quoteId: string, base64Pdf: string): Promise<{ success: boolean; url?: string; error?: string }> {
     try {
-        // En Next.js App Router (Edge o Node), process.env se puede usar si se pasan las variables
-        const accountId = process.env.R2_ACCOUNT_ID || 'f9f7037e5c7f3cc70c00a2c1f40fe6dd';
-        const accessKeyId = process.env.R2_ACCESS_KEY_ID || '929ec46d60e280b129df0fc8ea0f9fa6';
-        const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY || 'b90fa94b6ab5e40a2c949f313e6dde9afe44b2b9853a60d7e469ab09286e5108';
-        const bucketName = process.env.R2_BUCKET_NAME || 'pasteleria-assets';
+        if (!/^COT-[A-Z0-9]{4}$/.test(quoteId)) {
+            return { success: false, error: 'El identificador de la cotización no es válido.' };
+        }
 
-        const S3 = new S3Client({
-            region: 'auto',
-            endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
-            credentials: {
-                accessKeyId,
-                secretAccessKey,
-            },
-        });
+        const { env } = getRequestContext();
+        if (!env.ASSETS) throw new Error('No está disponible el binding de Cloudflare R2.');
 
-        // Convert base64 to Buffer
         const base64Data = base64Pdf.includes(',') ? base64Pdf.split(',')[1] : base64Pdf;
-        const buffer = Buffer.from(base64Data, 'base64');
+        const binary = atob(base64Data);
+        const bytes = new Uint8Array(binary.length);
+        for (let index = 0; index < binary.length; index += 1) {
+            bytes[index] = binary.charCodeAt(index);
+        }
         
         const fileName = `eventos/cotizaciones/${quoteId}.pdf`;
+        await env.ASSETS.put(fileName, bytes, {
+            httpMetadata: { contentType: 'application/pdf' },
+        });
 
-        await S3.send(
-            new PutObjectCommand({
-                Bucket: bucketName,
-                Key: fileName,
-                Body: buffer,
-                ContentType: 'application/pdf',
-            })
-        );
-
-        const publicUrl = `https://imagenes.pasteleriahijitos.cl/${fileName}`;
+        const publicBase = (env.R2_DOMAIN || 'https://imagenes.pasteleriahijitos.cl').replace(/\/+$/, '');
+        const publicUrl = `${publicBase}/${fileName}`;
 
         return { success: true, url: publicUrl };
     } catch (error: any) {

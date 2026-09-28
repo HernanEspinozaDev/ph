@@ -107,19 +107,9 @@ export async function POST(request: NextRequest) {
             return val ? String(val).trim() : undefined;
         };
 
-        const envVars = env as any;
-        console.log("Debug: Available Env Keys (Raw):", Object.keys(envVars).map(k => `"${k}"`));
-
-        const accountId = getEnvVar('R2_ACCOUNT_ID') || 'f9f7037e5c7f3cc70c00a2c1f40fe6dd';
+        const accountId = getEnvVar('R2_ACCOUNT_ID');
         const accessKeyId = getEnvVar('R2_ACCESS_KEY_ID');
         const secretAccessKey = getEnvVar('R2_SECRET_ACCESS_KEY');
-
-        console.log("Fallback Credentials Check:", {
-            hasAccountId: !!accountId,
-            hasAccessKey: !!accessKeyId,
-            hasSecret: !!secretAccessKey,
-            accessKeyPrefix: accessKeyId ? accessKeyId.substring(0, 4) + '...' : 'none'
-        });
 
         if (accountId && accessKeyId && secretAccessKey) {
             console.log("Using S3 Client fallback...");
@@ -159,20 +149,14 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ url: publicUrl });
         }
 
-        // Collect debug info for the client error
-        const debugInfo = {
+        console.error('R2 upload failed; binding or configured S3 fallback is unavailable.', {
             hasBucket: !!bucket,
-            r2Error: r2Error ? r2Error.message : 'No binding error',
-            envKeys: Object.keys(envVars),
-            hasAccId: !!accountId,
-            hasKeyId: !!accessKeyId,
-            hasSecret: !!secretAccessKey
-        };
-
-        console.error('R2 binding failed and no S3 credentials provided for fallback.', debugInfo);
+            hasS3Fallback: !!(accountId && accessKeyId && secretAccessKey),
+            bindingFailed: !!r2Error,
+        });
         return NextResponse.json({
             error: 'Upload Failed',
-            details: `Binding failed (${debugInfo.r2Error}) & No S3 Creds. Env Keys: ${debugInfo.envKeys.join(', ')}`
+            details: 'Cloudflare R2 no pudo completar la carga. Revisa la configuración del servicio.'
         }, { status: 500 });
 
     } catch (error) {
