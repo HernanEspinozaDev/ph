@@ -52,6 +52,9 @@ migrations/
 *.db
 *.db3
 
+# Versioned Cloudflare D1 migrations
+!database/d1/*.sql
+
 # Local helper scripts
 fix*.js
 /scratch/

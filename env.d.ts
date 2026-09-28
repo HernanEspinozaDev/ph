@@ -5,4 +5,7 @@ interface CloudflareEnv {
     R2_ACCESS_KEY_ID: string;
     R2_SECRET_ACCESS_KEY: string;
     R2_ACCOUNT_ID: string;
+    GBP_CLIENT_ID?: string;
+    GBP_CLIENT_SECRET?: string;
+    GBP_REFRESH_TOKEN?: string;
 }

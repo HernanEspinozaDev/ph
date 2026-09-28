@@ -6,6 +6,8 @@ import { CraftsmanshipSection } from '@/components/CraftsmanshipSection';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { GoogleReviews } from '@/components/GoogleReviews';
 
+export const dynamic = 'force-dynamic';
+
 // Helper to find image from placeholder data
 const findImage = (id: string) => {
   const image = PlaceHolderImages.find((img) => img.id === id);

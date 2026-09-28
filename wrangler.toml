@@ -4,9 +4,9 @@ name = "pasteleria-hijitos"
 binding = "DB"
 database_name = "pasteleria-db"
 database_id = "f7985336-a478-4502-84a5-8b40835559dc"
+migrations_dir = "database/d1"
 
 [[r2_buckets]]
 binding = "ASSETS"
 bucket_name = "pasteleria-assets"
-
 
