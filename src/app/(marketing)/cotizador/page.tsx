@@ -3,7 +3,6 @@
 import { useCotizadorStore } from '@/hooks/useCotizadorStore';
 import { useState, useEffect } from 'react';
 import { saveQuote } from '@/app/actions/save-quote';
-import { uploadPdf } from '@/app/actions/upload-pdf';
 import Link from 'next/link';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -21,6 +20,7 @@ export default function CotizadorPage() {
     const [ciudad, setCiudad] = useState('');
     const [tipoDocumento, setTipoDocumento] = useState('Boleta');
     const [isGenerating, setIsGenerating] = useState(false);
+    const [generationError, setGenerationError] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
     const [generatedUrl, setGeneratedUrl] = useState('');
     const [waLinkState, setWaLinkState] = useState('');
@@ -203,22 +203,27 @@ export default function CotizadorPage() {
         doc.text("PASTELERIAHIJITOS.CL", 105, 286, { align: 'center' });
 
         // En lugar de descargarlo, retornamos el PDF en Base64
-        return doc.output('datauristring');
+        return doc.output('blob');
     };
 
     const handleGenerate = async (e: React.FormEvent) => {
         e.preventDefault();
         if (items.length === 0) return;
         setIsGenerating(true);
+        setGenerationError('');
 
         try {
-            // 1. Generate PDF as Base64
-            const base64Pdf = await generatePDF();
+            // 1. Generate the PDF as a Blob so the browser can upload it without base64 expansion.
+            const pdf = await generatePDF();
 
-            // 2. Upload to Cloudflare R2
-            const uploadRes = await uploadPdf(quoteId, base64Pdf);
-            if (!uploadRes.success || !uploadRes.url) {
-                throw new Error(uploadRes.error || "No se pudo obtener la URL pública del PDF.");
+            // 2. Upload through a Pages API route. R2 bindings are called directly by the route runtime.
+            const uploadData = new FormData();
+            uploadData.set('quoteId', quoteId);
+            uploadData.set('file', pdf, `${quoteId}.pdf`);
+            const uploadResponse = await fetch('/api/quotes/upload', { method: 'POST', body: uploadData });
+            const uploadRes = await uploadResponse.json();
+            if (!uploadResponse.ok || !uploadRes.success || !uploadRes.url) {
+                throw new Error(uploadRes.error || 'No se pudo obtener la URL pública del PDF.');
             }
 
             // 3. Save to DB (only ID, URL and total)
@@ -246,7 +251,7 @@ export default function CotizadorPage() {
             
         } catch (error) {
             console.error(error);
-            alert("Ocurrió un error inesperado al generar la cotización.");
+            setGenerationError(error instanceof Error ? error.message : 'Ocurrió un error inesperado al generar la cotización.');
         } finally {
             setIsGenerating(false);
         }
@@ -296,6 +301,7 @@ export default function CotizadorPage() {
             <div className="container mx-auto px-4 max-w-4xl">
                 <h1 className="text-3xl font-serif text-gray-900 mb-2">Revisar Cotización</h1>
                 <p className="text-gray-500 mb-8">Revisa los productos seleccionados y genera tu PDF.</p>
+                {generationError && <div role="alert" className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">{generationError}</div>}
 
                 <form onSubmit={handleGenerate}>
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
